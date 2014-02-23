@@ -52,6 +52,11 @@ void passiveMotionFunc(int x, int y)
 	Interface::getInstance().passiveMotionFunc(x, y);
 }
 
+void reDraw(int value) {
+	glutPostRedisplay();
+	glutTimerFunc(16, reDraw, 0);
+}
+
 void timer(int value)
 {
 	std::ostringstream oss;
@@ -59,15 +64,16 @@ void timer(int value)
 	std::string s = oss.str();
 	Interface::getInstance().displayWindow();
 	glutSetWindowTitle(s.c_str());
-	FrameCount = 0;
 	glutPostRedisplay();
-	glutTimerFunc(16, timer, 0);
+	FrameCount = 0;
+	glutTimerFunc(1000, timer, 0);
 }
 
 void setupCallbacks()
 {
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
+	glutTimerFunc(0, reDraw, 0);
 	glutTimerFunc(0, timer, 0);
 	glutMouseWheelFunc(mouseWheel);
 	glutKeyboardFunc(KeyboardFunc);

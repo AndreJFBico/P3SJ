@@ -139,13 +139,7 @@
     <None Include="..\shaders\vertex_shader.glsl">
       <Filter>Resource Files\shaders</Filter>
     </None>
-    <None Include="..\objects\sphere.obj">
-      <Filter>Resource Files\objects</Filter>
-    </None>
-    <None Include="..\textures\monkey.psd">
-      <Filter>Resource Files\textures</Filter>
-    </None>
-    <None Include="..\objects\monkey.obj">
+    <None Include="..\objects\teapot.obj">
       <Filter>Resource Files\objects</Filter>
     </None>
   </ItemGroup>
