@@ -59,6 +59,7 @@ void timer(int value)
 	std::string s = oss.str();
 	Interface::getInstance().displayWindow();
 	glutSetWindowTitle(s.c_str());
+	FrameCount = 0;
 	glutPostRedisplay();
 	glutTimerFunc(16, timer, 0);
 }

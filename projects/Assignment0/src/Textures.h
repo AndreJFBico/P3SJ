@@ -8,7 +8,7 @@ class Texture
 protected:
 	std::string texPath;
 	GLuint *texture;
-	int width, height;
+	int width, height, channels;
 	unsigned char* image;
 	GLenum rgbType, colorType;
 

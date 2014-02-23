@@ -29,4 +29,4 @@ void main () {
 	ex_Texcoord = vec2(in_Texture.x, 1.0- in_Texture.y);
 	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;
 	ex_Color = in_Color;
-}
+} 

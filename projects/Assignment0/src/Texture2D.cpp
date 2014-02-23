@@ -19,11 +19,11 @@ void Texture2D::load(const std::string& filename)
 {
 	texPath = filename;
 	setType(GL_TEXTURE_2D);
-	rgbType = GL_RGBA;
-	colorType = GL_RGBA;
+	rgbType = GL_RGB;
+	colorType = GL_RGB;
 	
 	glGenTextures(1, texture);
-	image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGBA);
+	image = SOIL_load_image(filename.c_str(), &width, &height, &channels, SOIL_LOAD_RGB);
 	if(image==0){
 		std::cout << "error loading texture file" << filename << "." << std::endl;
 		exit(EXIT_FAILURE);

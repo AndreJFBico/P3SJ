@@ -33,6 +33,7 @@ out vec4 colorOut;
 
 void main(void)
 {
+
 	vec3 V = vec3(ex_Vertex);
 	vec3 N = normalize(ex_Normal);
 	
@@ -60,7 +61,7 @@ void main(void)
 	float attenuation = 1 / (1.0 +LightAttenuation.x * Ldist + LightAttenuation.y * pow(Ldist,2));
 	
 	if(textured)
-		colorOut = texture(Texture0, ex_Texcoord) * vec4((ambient + (diffuse + specular) * attenuation),1.0);
+		colorOut = /*texture(Texture0, ex_Texcoord) * */vec4((ambient + (diffuse + specular) * attenuation),1.0);
 	else 
 		colorOut = ex_Color;
 }

@@ -55,6 +55,15 @@
     <Filter Include="Source Files\ObjReader">
       <UniqueIdentifier>{471b2461-03ec-4c3e-a09f-15be10983df0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\objects">
+      <UniqueIdentifier>{aa9e036b-8fe8-4505-8409-b4b65526aa23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\textures">
+      <UniqueIdentifier>{c822d2f6-7cc9-4e78-8fe6-11c9ee423ad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\shaders">
+      <UniqueIdentifier>{fb394e76-cd1a-4543-8ba1-0e17ee568f64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -122,5 +131,30 @@
     <ClInclude Include="..\src\PieceReader.h">
       <Filter>Header Files\ObjReader</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\fragment_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\vertex_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="..\objects\sphere.obj">
+      <Filter>Resource Files\objects</Filter>
+    </None>
+    <None Include="..\textures\monkey.psd">
+      <Filter>Resource Files\textures</Filter>
+    </None>
+    <None Include="..\objects\monkey.obj">
+      <Filter>Resource Files\objects</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\textures\stone.tga">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\fire.tga">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

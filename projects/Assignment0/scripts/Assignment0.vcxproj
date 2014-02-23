@@ -35,6 +35,29 @@
     <ClInclude Include="..\src\Textures.h" />
     <ClInclude Include="..\src\Vertex.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\fragment_shader.glsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\shaders\vertex_shader.glsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\textures\monkey.psd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\objects\sphere.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\textures\fire.tga" />
+    <Image Include="..\textures\stone.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\objects\monkey.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{317E3F7B-6CC8-4DF0-AE91-8F0D67B7DDF7}</ProjectGuid>
     <RootNamespace>Assignment1</RootNamespace>

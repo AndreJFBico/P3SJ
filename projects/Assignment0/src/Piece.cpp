@@ -45,7 +45,7 @@ void Piece::createBufferObject()
 	normalID = glGetUniformLocation(progID, "NormalMatrix");
 	uboID = glGetUniformBlockIndex(progID, "SharedMatrices");
 
-	glUniform3f(glGetUniformLocation(progID, "LightPosition"), 0.0, 0.0, 15.0);//2.0,0.0,0.0
+	glUniform3f(glGetUniformLocation(progID, "LightPosition"), 0.0, 0.0, 27.0);//2.0,0.0,0.0
 	glUniform2f(glGetUniformLocation(progID, "LightAttenuation"), 0.0f, 0.0005f);//0.0, 0.0
 	glUniform3f(glGetUniformLocation(progID, "AmbientLightColor"), 0.3f, 0.3f, 0.3f);//0.1,0.1,0.1
 	glUniform3f(glGetUniformLocation(progID, "LightDiffuseColor"), 0.9f, 0.9f, 0.9f);//0.9,0.9,0.9
