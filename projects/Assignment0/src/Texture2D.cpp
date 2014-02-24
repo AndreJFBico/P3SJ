@@ -24,7 +24,8 @@ void Texture2D::load(const std::string& filename)
 	
 	glGenTextures(1, texture);
 	image = SOIL_load_image(filename.c_str(), &width, &height, &channels, SOIL_LOAD_RGB);
-	if(image==0){
+	if(image==0)
+	{
 		std::cout << "error loading texture file" << filename << "." << std::endl;
 		exit(EXIT_FAILURE);
 	}

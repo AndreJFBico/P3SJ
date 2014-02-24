@@ -54,6 +54,9 @@ public:
 	void setOrientation(glm::fquat orientation);
 	void setTransformation(glm::mat4 transformation);
 
+	void addTransformation(glm::mat4 m);
+	void addScaleTransformation(glm::mat4 m);
+
 	glm::fquat getOrientation();
 	glm::mat4 getTransformation();
 

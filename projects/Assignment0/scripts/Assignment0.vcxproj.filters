@@ -96,6 +96,9 @@
     <ClCompile Include="..\src\PieceReader.cpp">
       <Filter>Source Files\ObjReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Manipulator.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Includes.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="..\src\PieceReader.h">
       <Filter>Header Files\ObjReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Manipulator.h">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

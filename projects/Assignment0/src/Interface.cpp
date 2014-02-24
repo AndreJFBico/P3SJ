@@ -60,6 +60,17 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 			cameraMode = true;
 		}
 	}
+	else if (key == 'r')
+	{
+		if (rotationMode)
+		{
+			rotationMode = false;
+		}
+		else
+		{
+			rotationMode = true;
+		}
+	}
 }
 
 void Interface::specialkeyPressed(int key, int x, int y)
@@ -74,6 +85,10 @@ void Interface::passiveMotionFunc(int x, int y)
 	if (cameraMode)
 	{
 		Manager::getInstance().updateCameraRotation(x, y);
+	}
+	else if (rotationMode)
+	{
+		/***/
 	}
 	Manager::getInstance().updateLastMXY(x, y);
 }

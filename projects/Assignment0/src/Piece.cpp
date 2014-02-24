@@ -200,7 +200,12 @@ void Piece::reset()
 	transformation = glm::mat4(1.0f);
 }
 
-void Piece::translate(glm::vec3 vec)
+void Piece::addTransformation(glm::mat4 m)
 {
-	transformation = glm::transpose(glm::translate(transformation, vec));
+	transformation = transformation * m;
+}
+
+void Piece::addScaleTransformation(glm::mat4 m)
+{
+	scale = scale * m;
 }

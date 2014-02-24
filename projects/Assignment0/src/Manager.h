@@ -7,11 +7,13 @@
 #include "Drawable.h"
 #include "Texture2D.h"
 #include "PieceReader.h"
+#include "Manipulator.h"
 
 class Manager
 {
-	std::vector<Drawable*> *Objs;
+	std::unordered_map<int, Drawable*> *Objs;
 	Camera * camera;
+	Manipulator * manipulator;
 
 	Manager() {};
 	Manager(Manager const&);
@@ -31,6 +33,9 @@ public:
 	void updateCameraPosition(float x, float y);
 	void updateCameraZoom(int amount);
 	void updateLastMXY(float x, float y);
+	void transformPiece(int ID, int move, float tx);
+
+	Piece* getPiece(int ID);
 
 	ShaderProgram *createShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath);
 

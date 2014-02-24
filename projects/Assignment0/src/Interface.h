@@ -6,7 +6,7 @@
 class Interface
 {
 	int WindowHandle;
-	bool cameraMode;
+	bool cameraMode, rotationMode;
 
 	Interface() {};
 	Interface(Interface const&);

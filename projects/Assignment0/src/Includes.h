@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include <math.h>
 #include "GL/glew.h"
 #include "GL/freeglut.h"
@@ -17,6 +18,14 @@
 #define COLORS 1
 #define NORMALS 2
 #define TEXTURE 3
+
+#define ROTATE 0
+#define TRANSLATE 1
+#define SCALE 2
+
+#define X_AXIS 0
+#define Y_AXIS 1
+#define Z_AXIS 2 
 
 #define WINDOW_WIDTH 1000
 #define WINDOW_HEIGHT 700

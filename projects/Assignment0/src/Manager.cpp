@@ -2,8 +2,9 @@
 
 void Manager::initManager()
 {
-	Objs = new std::vector<Drawable*>;
+	Objs = new std::unordered_map<int, Drawable*>;
 	camera = new Camera();
+	manipulator = new Manipulator();
 }
 
 void Manager::initScene()
@@ -16,16 +17,18 @@ void Manager::initScene()
 	Texture* tex = new Texture2D();
 	PieceReader::getInstance().readObject("..\\objects\\teapot.obj");
 	tex->load("..\\textures\\stone.tga");
-	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0);
-	Objs->push_back(p);
+	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0);	
+	std::pair<int, Piece*> val(p->getID(), p);
+	Objs->insert(val);
+
 	PieceReader::getInstance().clearAll();
 }
 
 void Manager::draw()
 {
-	for (std::vector<Drawable*>::iterator it = Objs->begin(); it != Objs->end(); ++it)
+	for (std::unordered_map<int, Drawable*>::iterator it = Objs->begin(); it != Objs->end(); ++it)
 	{
-		(*it)->draw(camera->getViewMatrix(), camera->getProjectionMatrix(), camera->computeCameraCenter());
+		it->second->draw(camera->getViewMatrix(), camera->getProjectionMatrix(), camera->computeCameraCenter());
 	}
 }
 
@@ -55,6 +58,44 @@ void Manager::updateLastMXY(float x, float y)
 	camera->setLast_mx(x);
 	camera->setLast_my(y);
 	camera->updateCamera();
+}
+
+Piece* Manager::getPiece(int ID)
+{
+	return (Piece*)Objs->find(ID)->second;
+}
+
+void Manager::transformPiece(int ID, int move, float tx)
+{
+	if (ID != 0.0) {
+		Piece* piece = getPiece(ID);
+		if (piece != NULL)
+		{
+			if (move == 1) {
+				manipulator->manipulatePiece(piece, TRANSLATE, X_AXIS, tx / 100);
+			}
+			else if (move == 2) {
+				manipulator->manipulatePiece(piece, TRANSLATE, Y_AXIS, tx / 100);
+			}
+			else if (move == 3) {
+				manipulator->manipulatePiece(piece, TRANSLATE, Z_AXIS, tx / 100);
+			}
+			else if (move == 4) {
+				manipulator->manipulatePiece(piece, ROTATE, X_AXIS, tx / 1000);
+			}
+			else if (move == 5) {
+				manipulator->manipulatePiece(piece, ROTATE, Y_AXIS, tx / 1000);
+			}
+			else if (move == 6) {
+				manipulator->manipulatePiece(piece, ROTATE, Z_AXIS, tx / 1000);
+			}
+			else if (move == 7) {
+				manipulator->manipulatePiece(piece, SCALE, X_AXIS, tx / 1000);
+				manipulator->manipulatePiece(piece, SCALE, Y_AXIS, tx / 1000);
+				manipulator->manipulatePiece(piece, SCALE, Z_AXIS, tx / 1000);
+			}
+		}
+	}
 }
 
 ShaderProgram* Manager::createShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath)
