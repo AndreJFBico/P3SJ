@@ -40,6 +40,8 @@ public:
 	void transformPiece(int ID, int move, float tx);
 	void setRotType(int rottype);
 	void updateRotation();
+	void setTexStone();
+	void setTexFire();
 
 	Piece* getPiece(int ID);
 

@@ -48,6 +48,9 @@ public:
 	void addIndex(unsigned int v);
 
 	int getID();
+	Texture* getTexture(){
+		return tex;
+	}
 
 	void setId(int id);
 	void setColor();

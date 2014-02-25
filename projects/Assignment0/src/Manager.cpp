@@ -111,3 +111,15 @@ ShaderProgram* Manager::createShaderProgram(std::string vertexShaderPath, std::s
 
 	return shProg;
 }
+
+void Manager::setTexFire()
+{
+	Piece * piece = (Piece*)Objs->find(0)->second;
+	piece->getTexture()->load("..\\textures\\fire.tga");
+}
+
+void Manager::setTexStone()
+{
+	Piece * piece = (Piece*)Objs->find(0)->second;
+	piece->getTexture()->load("..\\textures\\stone.tga");
+}
