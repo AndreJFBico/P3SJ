@@ -4,6 +4,7 @@ void Interface::initInterface(int val)
 {
 	WindowHandle = val;
 	cameraMode = false;
+	rotationMode = NONE;
 }
 
 void Interface::displayWindow()
@@ -23,13 +24,20 @@ void Interface::setWindowHandle(int val)
 
 void Interface::onMouse(int button, int state, int x, int y)
 {
-	/*
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
+		Manager::getInstance().setRotType(ROTX);
+	}
 
-		GLUT_LEFT_BUTTON
-			GLUT_MIDDLE_BUTTON
-	}*/
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		Manager::getInstance().setRotType(ROTY);
+	}
+
+	if (button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
+	{
+		Manager::getInstance().setRotType(ROTZ);
+	}
 }
 
 void Interface::mouseWheel(int button, int dir, int x, int y)

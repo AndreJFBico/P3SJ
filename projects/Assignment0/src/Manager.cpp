@@ -26,6 +26,7 @@ void Manager::initScene()
 
 void Manager::draw()
 {
+	updateRotation();
 	for (std::unordered_map<int, Drawable*>::iterator it = Objs->begin(); it != Objs->end(); ++it)
 	{
 		it->second->draw(camera->getViewMatrix(), camera->getProjectionMatrix(), camera->computeCameraCenter());
@@ -96,6 +97,34 @@ void Manager::transformPiece(int ID, int move, float tx)
 			}
 		}
 	}
+}
+
+void Manager::setRotType(int rottype)
+{
+	if (rotation = rottype)
+		rotation = NONE;
+	rotation = rottype;
+}
+
+void Manager::updateRotation()
+{
+	switch (rotation)
+	{
+	case NONE:
+		break;
+	case ROTX:
+		manipulator->manipulatePiece((Piece*)Objs->find(0)->second, ROTATE, X_AXIS, 10);
+		break;
+	case ROTY:
+		manipulator->manipulatePiece((Piece*)Objs->find(0)->second, ROTATE, Y_AXIS, 10);
+		break;
+	case ROTZ:
+		manipulator->manipulatePiece((Piece*)Objs->find(0)->second, ROTATE, Z_AXIS, 10);
+		break;
+	default:
+		break;
+	}
+
 }
 
 ShaderProgram* Manager::createShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath)

@@ -9,8 +9,12 @@
 #include "PieceReader.h"
 #include "Manipulator.h"
 
+
+enum rotType { NONE, ROTX, ROTY, ROTZ };
+
 class Manager
 {
+	int rotation;
 	std::unordered_map<int, Drawable*> *Objs;
 	Camera * camera;
 	Manipulator * manipulator;
@@ -34,6 +38,8 @@ public:
 	void updateCameraZoom(int amount);
 	void updateLastMXY(float x, float y);
 	void transformPiece(int ID, int move, float tx);
+	void setRotType(int rottype);
+	void updateRotation();
 
 	Piece* getPiece(int ID);
 

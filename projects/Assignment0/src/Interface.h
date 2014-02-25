@@ -3,10 +3,12 @@
 #include "Includes.h"
 #include "Manager.h"
 
+
+
 class Interface
 {
-	int WindowHandle;
-	bool cameraMode, rotationMode;
+	int WindowHandle, rotationMode;
+	bool cameraMode;
 
 	Interface() {};
 	Interface(Interface const&);
