@@ -40,10 +40,16 @@ public:
 	void updateCameraZoom(int amount);
 	void updateLastMXY(float x, float y);
 	void updateLightAttrs();
+
+	void addGrid(float x, float y, float z, float size);
+
 	void incLightAttr();
+
 	void transformPiece(int ID, int move, float tx);
 	void setRotType(int rottype);
 	void updateRotation();
+	void setTexStone();
+	void setTexFire();
 
 	Piece* getPiece(int ID);
 

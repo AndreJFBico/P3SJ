@@ -12,6 +12,8 @@ class Piece : public Drawable
 protected:
 	int id;
 
+	bool setLines;
+
 	/*Variation on the current move towards the objective.*/
 	float variation;
 	/*Objective to move towards, changed by the method move.*/
@@ -58,6 +60,13 @@ public:
 	void addIndex(unsigned int v);
 
 	int getID();
+	Texture* getTexture(){
+		return tex;
+	}
+
+	void drawWithLines(){ setLines = true; }
+
+	void transformCenter(glm::mat4 v) { initTransformation = initTransformation *v; }
 
 	void setId(int id);
 	void setColor();

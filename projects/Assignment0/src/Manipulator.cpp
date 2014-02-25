@@ -51,7 +51,7 @@ void Manipulator::rotate(Piece* piece, int axis, float degrees)
     ax = ax * sinf(fAngRad / 2.0f);
     float scalar = cosf(fAngRad / 2.0f); 
     glm::fquat offset(scalar, direction.x, direction.y, direction.z);   
-    piece->setOrientation( glm::normalize( piece->getOrientation() * offset  ) );
+    piece->setOrientation( glm::normalize( piece->getOrientation()* offset ) );
 }
 
 void Manipulator::translate(Piece* piece, int axis, float distance)

@@ -68,6 +68,14 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 			cameraMode = true;
 		}
 	}
+	else if (key == 's')
+	{
+		Manager::getInstance().setTexStone();
+	}
+	else if (key == 'f')
+	{
+		Manager::getInstance().setTexFire();
+	}
 	else if (key == 'm')
 	{
 		Manager::getInstance().incLightAttr();

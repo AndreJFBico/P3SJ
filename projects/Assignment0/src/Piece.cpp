@@ -23,6 +23,7 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	createBufferObject();
 	tex = 0;
 	variation = 0.0;
+	setLines = false;
 }
 
 Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, Texture* t, int ident) : Drawable()
@@ -46,6 +47,7 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 					64.0f);
 	createBufferObject();
 	variation = 0.0;
+	setLines = false;
 }
 
 Drawable* Piece::clone()
@@ -155,7 +157,11 @@ void Piece::sendModelMatrix(glm::mat4 viewMatrix, glm::mat4 modelMatrix)
 void Piece::bindDraw()
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glDrawElementsBaseVertex(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0, 0);
+	if (!setLines) {
+		glDrawElementsBaseVertex(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0, 0);
+	}
+	else glDrawElementsBaseVertex(GL_LINES, indices.size(), GL_UNSIGNED_INT, (void*)0, 0);
+	
 }
 
 void Piece::postDraw()

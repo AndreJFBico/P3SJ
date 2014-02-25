@@ -21,8 +21,9 @@ void Manager::initScene()
 	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0);	
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
-
 	PieceReader::getInstance().clearAll();
+
+	addGrid(-0.5, 0.0, 0.0, 1.0f);
 }
 
 void Manager::draw()
@@ -77,6 +78,44 @@ void Manager::setRotType(int rottype)
 		rotation = rottype;
 }
 
+void Manager::addGrid(float x, float y, float z, float size)
+{
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader.glsl", "..\\shaders\\fragment_shader.glsl");
+	Vertex v;
+	std::vector<Vertex> *vertexes = new std::vector<Vertex>;
+	std::vector<unsigned int> *indexes = new std::vector<unsigned int>;
+	int HALF_GRID_SIZE = 5;
+
+	for (int i = -HALF_GRID_SIZE; i <= HALF_GRID_SIZE; i++)
+	{
+		v.XYZW = glm::vec4((float)i, 0, (float)-HALF_GRID_SIZE, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+		v.NORMAL = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes->push_back(v);
+		v.XYZW = glm::vec4((float)i, 0, (float)HALF_GRID_SIZE, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f);
+		vertexes->push_back(v);
+		v.XYZW = glm::vec4((float)-HALF_GRID_SIZE, 0, (float)i, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f);
+		vertexes->push_back(v);
+		v.XYZW = glm::vec4((float)HALF_GRID_SIZE, 0, (float)i, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f);
+		vertexes->push_back(v);
+	}
+
+	for (int i = 0; i < vertexes->size(); i++)
+	{
+		indexes->push_back(i);
+	}
+
+	Piece *p = new Piece(*vertexes, *indexes, sh, 2);
+	std::pair<int, Piece*> val(p->getID(), p);
+	Objs->insert(val);
+	p->drawWithLines();
+	p->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(x, 0.0, 0.0))));
+	p->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, y, 0.0))));
+	p->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, z))));
+}
+
 void Manager::incLightAttr()
 {
 	if (lightAttrs == Default)
@@ -91,7 +130,6 @@ void Manager::incLightAttr()
 		lightAttrs = Cyan;
 	else if (lightAttrs == Cyan)
 		lightAttrs = Default;
-
 }
 
 void Manager::updateLightAttrs()
@@ -210,4 +248,16 @@ ShaderProgram* Manager::createShaderProgram(std::string vertexShaderPath, std::s
 	shProg->link();
 
 	return shProg;
+}
+
+void Manager::setTexFire()
+{
+	Piece * piece = (Piece*)Objs->find(0)->second;
+	piece->getTexture()->load("..\\textures\\fire.tga");
+}
+
+void Manager::setTexStone()
+{
+	Piece * piece = (Piece*)Objs->find(0)->second;
+	piece->getTexture()->load("..\\textures\\stone.tga");
 }
