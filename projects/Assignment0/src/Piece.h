@@ -44,6 +44,16 @@ public:
 	void bindDraw();
 	void postDraw();
 
+	void setLigthAttrs(	glm::vec3 LightPosition,
+						glm::vec2 LightAttenuation,
+						glm::vec3 AmbientLightColor,
+						glm::vec3 LightDiffuseColor,
+						glm::vec3 LightSpecularColor,
+						glm::vec3 MaterialAmbientColor,
+						glm::vec3 MaterialDiffuseColor,
+						glm::vec3 MaterialSpecularColor,
+						float MaterialShininess);
+
 	void createBufferObject();
 	void addIndex(unsigned int v);
 

@@ -11,6 +11,15 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	scale = glm::mat4(1.0f);
 	initTransformation = glm::mat4(1.0f);
 	transformation = glm::mat4(1.0f);
+	setLigthAttrs(	glm::vec3(0.0, 0.0, 27.0),
+					glm::vec2(0.0f, 0.0005f),
+					glm::vec3(0.3f, 0.3f, 0.3f),
+					glm::vec3(0.9f, 0.9f, 0.9f),
+					glm::vec3(0.9f, 0.9f, 0.9f),
+					glm::vec3(0.8f, 0.8f, 0.8f),
+					glm::vec3(0.9f, 0.9f, 0.9f),
+					glm::vec3(0.9f, 0.9f, 0.9f),
+					64.0f);
 	createBufferObject();
 	tex = 0;
 	variation = 0.0;
@@ -26,6 +35,15 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	initTransformation = glm::mat4(1.0f);
 	transformation = glm::mat4(1.0f);
 	tex = t;
+	setLigthAttrs(	glm::vec3(0.0, 0.0, 27.0),
+					glm::vec2(0.0f, 0.0005f),
+					glm::vec3(0.3f, 0.3f, 0.3f),
+					glm::vec3(0.9f, 0.9f, 0.9f),
+					glm::vec3(0.9f, 0.9f, 0.9f),
+					glm::vec3(0.8f, 0.8f, 0.8f),
+					glm::vec3(0.9f, 0.9f, 0.9f),
+					glm::vec3(0.9f, 0.9f, 0.9f),
+					64.0f);
 	createBufferObject();
 	variation = 0.0;
 }
@@ -35,26 +53,38 @@ Drawable* Piece::clone()
 	return 0;
 }
 
-void Piece::createBufferObject()
+void Piece::setLigthAttrs(	glm::vec3 LightPosition, 
+							glm::vec2 LightAttenuation,
+							glm::vec3 AmbientLightColor,
+							glm::vec3 LightDiffuseColor,
+							glm::vec3 LightSpecularColor,
+							glm::vec3 MaterialAmbientColor,
+							glm::vec3 MaterialDiffuseColor,
+							glm::vec3 MaterialSpecularColor,
+							float MaterialShininess)
 {
 	progID = shaderProg->getProgram();
 
 	glUseProgram(progID);
 
+	glUniform3f(glGetUniformLocation(progID, "LightPosition"), LightPosition.x, LightPosition.y, LightPosition.z);
+	glUniform2f(glGetUniformLocation(progID, "LightAttenuation"), LightAttenuation.x, LightAttenuation.y);
+	glUniform3f(glGetUniformLocation(progID, "AmbientLightColor"), AmbientLightColor.x, AmbientLightColor.y, AmbientLightColor.z);
+	glUniform3f(glGetUniformLocation(progID, "LightDiffuseColor"), LightDiffuseColor.x, LightDiffuseColor.y, LightDiffuseColor.z);
+	glUniform3f(glGetUniformLocation(progID, "LightSpecularColor"), LightSpecularColor.x, LightSpecularColor.y, LightSpecularColor.z);
+
+	glUniform3f(glGetUniformLocation(progID, "MaterialAmbientColor"), MaterialAmbientColor.x, MaterialAmbientColor.y, MaterialAmbientColor.z);
+	glUniform3f(glGetUniformLocation(progID, "MaterialDiffuseColor"), MaterialDiffuseColor.x, MaterialDiffuseColor.y, MaterialDiffuseColor.z);
+	glUniform3f(glGetUniformLocation(progID, "MaterialSpecularColor"), MaterialSpecularColor.x, MaterialSpecularColor.y, MaterialSpecularColor.z);
+	glUniform1f(glGetUniformLocation(progID, "MaterialShininess"), MaterialShininess);
+}
+
+
+void Piece::createBufferObject()
+{
 	unifID = glGetUniformLocation(progID, "ModelMatrix");
 	normalID = glGetUniformLocation(progID, "NormalMatrix");
 	uboID = glGetUniformBlockIndex(progID, "SharedMatrices");
-
-	glUniform3f(glGetUniformLocation(progID, "LightPosition"), 0.0, 0.0, 27.0);//2.0,0.0,0.0
-	glUniform2f(glGetUniformLocation(progID, "LightAttenuation"), 0.0f, 0.0005f);//0.0, 0.0
-	glUniform3f(glGetUniformLocation(progID, "AmbientLightColor"), 0.3f, 0.3f, 0.3f);//0.1,0.1,0.1
-	glUniform3f(glGetUniformLocation(progID, "LightDiffuseColor"), 0.9f, 0.9f, 0.9f);//0.9,0.9,0.9
-	glUniform3f(glGetUniformLocation(progID, "LightSpecularColor"), 0.9f, 0.9f, 0.9f);//0.9,0.9,0.9
-
-	glUniform3f(glGetUniformLocation(progID, "MaterialAmbientColor"), 0.8f, 0.8f, 0.8f);//0.9,0.1,0.1
-	glUniform3f(glGetUniformLocation(progID, "MaterialDiffuseColor"), 0.9f, 0.9f, 0.9f);//0.9,0.1,0.1
-	glUniform3f(glGetUniformLocation(progID, "MaterialSpecularColor"), 0.9f, 0.9f, 0.9f);//0.9,0.9,0.9
-	glUniform1f(glGetUniformLocation(progID, "MaterialShininess"), 64.0f);//64.0f//22
 
 	glUniformBlockBinding(progID, uboID, 0);
 

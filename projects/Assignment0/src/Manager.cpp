@@ -5,6 +5,7 @@ void Manager::initManager()
 	Objs = new std::unordered_map<int, Drawable*>;
 	camera = new Camera();
 	manipulator = new Manipulator();
+	lightAttrs = Default;
 }
 
 void Manager::initScene()
@@ -26,6 +27,7 @@ void Manager::initScene()
 
 void Manager::draw()
 {
+	updateLightAttrs();
 	updateRotation();
 	for (std::unordered_map<int, Drawable*>::iterator it = Objs->begin(); it != Objs->end(); ++it)
 	{
@@ -73,6 +75,104 @@ void Manager::setRotType(int rottype)
 		rotation = NONE;
 	else
 		rotation = rottype;
+}
+
+void Manager::incLightAttr()
+{
+	if (lightAttrs == Default)
+		lightAttrs = Ruby;
+	else if (lightAttrs == Ruby)
+		lightAttrs = Gold;
+	else if (lightAttrs == Gold)
+		lightAttrs = Silver;
+	else if (lightAttrs == Silver)
+		lightAttrs = Esmerald;
+	else if (lightAttrs == Esmerald)
+		lightAttrs = Cyan;
+	else if (lightAttrs == Cyan)
+		lightAttrs = Default;
+
+}
+
+void Manager::updateLightAttrs()
+{
+	switch (lightAttrs)
+	{
+	case Default:
+		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+			glm::vec3(0.0, 0.0, 27.0),
+			glm::vec2(0.0f, 0.0005f),
+			glm::vec3(0.3f, 0.3f, 0.3f),
+			glm::vec3(0.9f, 0.9f, 0.9f),
+			glm::vec3(0.9f, 0.9f, 0.9f),
+			glm::vec3(0.8f, 0.8f, 0.8f),
+			glm::vec3(0.9f, 0.9f, 0.9f),
+			glm::vec3(0.9f, 0.9f, 0.9f),
+			64.0f);
+		break;
+	case Ruby:
+		((Piece*)Objs->find(0)->second)->setLigthAttrs(	
+			glm::vec3(0.0, 0.0, 27.0),//pos 
+			glm::vec2(0.0f, 0.0005f),//attenuation
+			glm::vec3(0.1745, 0.01175, 0.01175),// AmbientLightColor
+			glm::vec3(0.61424, 0.04136, 0.04136),// LightDiffuseColor
+			glm::vec3(0.727811, 0.626959, 0.626959),// LightSpecularColor
+			glm::vec3(0.8f, 0.8f, 0.8f),// MaterialAmbientColor
+			glm::vec3(0.9f, 0.9f, 0.9f),// MaterialDiffuseColor
+			glm::vec3(0.9f, 0.9f, 0.9f),//MaterialSpecularColor
+			0.6 * 128);
+		break;
+	case Gold:
+		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+			glm::vec3(0.0, 0.0, 27.0),//pos 
+			glm::vec2(0.0f, 0.0005f),//attenuation
+			glm::vec3(0.24725, 0.1995, 0.0745),// AmbientLightColor
+			glm::vec3(0.75164, 0.60648, 0.22648),// LightDiffuseColor
+			glm::vec3(0.628281, 0.555802, 0.366065),// LightSpecularColor
+			glm::vec3(0.8f, 0.8f, 0.8f),// MaterialAmbientColor
+			glm::vec3(0.9f, 0.9f, 0.9f),// MaterialDiffuseColor
+			glm::vec3(0.9f, 0.9f, 0.9f),//MaterialSpecularColor
+			0.4 * 128);
+		break;
+	case Silver:
+		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+			glm::vec3(0.0, 0.0, 27.0),//pos 
+			glm::vec2(0.0f, 0.0005f),//attenuation
+			glm::vec3(0.19225, 0.19225, 0.19225),// AmbientLightColor
+			glm::vec3(0.50754, 0.50754, 0.50754),// LightDiffuseColor
+			glm::vec3(0.508273, 0.508273, 0.508273),// LightSpecularColor
+			glm::vec3(0.8f, 0.8f, 0.8f),// MaterialAmbientColor
+			glm::vec3(0.9f, 0.9f, 0.9f),// MaterialDiffuseColor
+			glm::vec3(0.9f, 0.9f, 0.9f),//MaterialSpecularColor
+			0.4 * 128);
+		break;
+	case Esmerald:
+		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+			glm::vec3(0.0, 0.0, 27.0),//pos 
+			glm::vec2(0.0f, 0.0005f),//attenuation
+			glm::vec3(0.0215, 0.1745, 0.0215),// AmbientLightColor
+			glm::vec3(0.07568, 0.61424, 0.07568),// LightDiffuseColor
+			glm::vec3(0.633, 0.727811, 0.633),// LightSpecularColor
+			glm::vec3(0.8f, 0.8f, 0.8f),// MaterialAmbientColor
+			glm::vec3(0.9f, 0.9f, 0.9f),// MaterialDiffuseColor
+			glm::vec3(0.9f, 0.9f, 0.9f),//MaterialSpecularColor
+			0.6*128);
+		break;
+	case Cyan :
+		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+			glm::vec3(0.0, 0.0, 27.0),//pos 
+			glm::vec2(0.0f, 0.0005f),//attenuation
+			glm::vec3(0.0, 0.1, 0.06),// AmbientLightColor
+			glm::vec3(0.0, 0.50980392, 0.50980392),// LightDiffuseColor
+			glm::vec3(0.50196078, 0.50196078, 0.50196078),// LightSpecularColor
+			glm::vec3(0.8f, 0.8f, 0.8f),// MaterialAmbientColor
+			glm::vec3(0.9f, 0.9f, 0.9f),// MaterialDiffuseColor
+			glm::vec3(0.9f, 0.9f, 0.9f),//MaterialSpecularColor
+			0.25 * 128);
+		break;
+	default:
+		break;
+	}
 }
 
 void Manager::updateRotation()

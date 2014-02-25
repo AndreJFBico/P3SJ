@@ -68,6 +68,10 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 			cameraMode = true;
 		}
 	}
+	else if (key == 'm')
+	{
+		Manager::getInstance().incLightAttr();
+	}
 }
 
 void Interface::specialkeyPressed(int key, int x, int y)
