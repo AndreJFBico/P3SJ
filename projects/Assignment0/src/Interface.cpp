@@ -73,6 +73,7 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 		if (rotationMode)
 		{
 			rotationMode = false;
+			Manager::getInstance().torquePiece(1, -1);
 		}
 		else
 		{
@@ -93,10 +94,6 @@ void Interface::passiveMotionFunc(int x, int y)
 	if (cameraMode)
 	{
 		Manager::getInstance().updateCameraRotation(x, y);
-	}
-	else if (rotationMode)
-	{
-		/***/
 	}
 	Manager::getInstance().updateLastMXY(x, y);
 }
