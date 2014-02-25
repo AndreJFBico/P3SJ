@@ -68,18 +68,6 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 			cameraMode = true;
 		}
 	}
-	else if (key == 'r')
-	{
-		if (rotationMode)
-		{
-			rotationMode = false;
-			Manager::getInstance().torquePiece(1, -1);
-		}
-		else
-		{
-			rotationMode = true;
-		}
-	}
 }
 
 void Interface::specialkeyPressed(int key, int x, int y)

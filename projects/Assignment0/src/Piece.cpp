@@ -14,7 +14,6 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	createBufferObject();
 	tex = 0;
 	variation = 0.0;
-	torque = -1;
 }
 
 Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, Texture* t, int ident) : Drawable()
@@ -29,7 +28,6 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	tex = t;
 	createBufferObject();
 	variation = 0.0;
-	torque = -1;
 }
 
 Drawable* Piece::clone()
@@ -158,20 +156,12 @@ int Piece::getID()
 	return id;
 }
 
-int Piece::getTorque()
-{
-	return torque;
-}
 
 void Piece::setId(int v)
 {
 	id = v;
 }
 
-void Piece::torquePiece(int axis)
-{
-	torque = axis;
-}
 
 glm::mat4 Piece::createModelMatrix()
 {

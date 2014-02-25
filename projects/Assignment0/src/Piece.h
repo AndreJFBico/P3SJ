@@ -10,7 +10,7 @@ class Piece : public Drawable
 {
 
 protected:
-	int id, torque;
+	int id;
 
 	/*Variation on the current move towards the objective.*/
 	float variation;
@@ -48,7 +48,6 @@ public:
 	void addIndex(unsigned int v);
 
 	int getID();
-	int getTorque();
 
 	void setId(int id);
 	void setColor();
@@ -57,8 +56,6 @@ public:
 
 	void addTransformation(glm::mat4 m);
 	void addScaleTransformation(glm::mat4 m);
-
-	void torquePiece(int axis);
 
 	glm::fquat getOrientation();
 	glm::mat4 getTransformation();

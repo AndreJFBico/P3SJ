@@ -106,7 +106,6 @@ void setupOpenGL() {
 	/*--------------------*/
 
 	/* Stencil buffer setup */
-	glEnable(GL_STENCIL_TEST);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 	glClearStencil(0.0);
 	/*--------------------*/
