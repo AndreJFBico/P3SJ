@@ -50,6 +50,7 @@ public:
 	void updateRotation();
 	void setTexStone();
 	void setTexFire();
+	void updateLightPos(bool direction);
 
 	Piece* getPiece(int ID);
 

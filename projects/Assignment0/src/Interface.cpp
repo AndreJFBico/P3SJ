@@ -80,6 +80,14 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 	{
 		Manager::getInstance().incLightAttr();
 	}
+	else if (key == 'o')
+	{
+		Manager::getInstance().updateLightPos(0);
+	}
+	else if (key == 'l')
+	{
+		Manager::getInstance().updateLightPos(1);
+	}
 }
 
 void Interface::specialkeyPressed(int key, int x, int y)

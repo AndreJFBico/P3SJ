@@ -24,11 +24,12 @@ void Manager::initScene()
 	PieceReader::getInstance().clearAll();
 
 	addGrid(-0.5, 0.0, 0.0, 1.0f);
+	updateLightAttrs();
 }
 
 void Manager::draw()
 {
-	updateLightAttrs();
+	
 	updateRotation();
 	for (std::unordered_map<int, Drawable*>::iterator it = Objs->begin(); it != Objs->end(); ++it)
 	{
@@ -130,6 +131,7 @@ void Manager::incLightAttr()
 		lightAttrs = Cyan;
 	else if (lightAttrs == Cyan)
 		lightAttrs = Default;
+	updateLightAttrs();
 }
 
 void Manager::updateLightAttrs()
@@ -138,7 +140,6 @@ void Manager::updateLightAttrs()
 	{
 	case Default:
 		((Piece*)Objs->find(0)->second)->setLigthAttrs(
-			glm::vec3(0.0, 0.0, 27.0),
 			glm::vec2(0.0f, 0.0005f),
 			glm::vec3(0.3f, 0.3f, 0.3f),
 			glm::vec3(0.9f, 0.9f, 0.9f),
@@ -149,8 +150,7 @@ void Manager::updateLightAttrs()
 			64.0f);
 		break;
 	case Ruby:
-		((Piece*)Objs->find(0)->second)->setLigthAttrs(	
-			glm::vec3(0.0, 0.0, 27.0),//pos 
+		((Piece*)Objs->find(0)->second)->setLigthAttrs( 
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.1745, 0.01175, 0.01175),// AmbientLightColor
 			glm::vec3(0.61424, 0.04136, 0.04136),// LightDiffuseColor
@@ -161,8 +161,7 @@ void Manager::updateLightAttrs()
 			0.6 * 128);
 		break;
 	case Gold:
-		((Piece*)Objs->find(0)->second)->setLigthAttrs(
-			glm::vec3(0.0, 0.0, 27.0),//pos 
+		((Piece*)Objs->find(0)->second)->setLigthAttrs( 
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.24725, 0.1995, 0.0745),// AmbientLightColor
 			glm::vec3(0.75164, 0.60648, 0.22648),// LightDiffuseColor
@@ -174,7 +173,6 @@ void Manager::updateLightAttrs()
 		break;
 	case Silver:
 		((Piece*)Objs->find(0)->second)->setLigthAttrs(
-			glm::vec3(0.0, 0.0, 27.0),//pos 
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.19225, 0.19225, 0.19225),// AmbientLightColor
 			glm::vec3(0.50754, 0.50754, 0.50754),// LightDiffuseColor
@@ -186,7 +184,6 @@ void Manager::updateLightAttrs()
 		break;
 	case Esmerald:
 		((Piece*)Objs->find(0)->second)->setLigthAttrs(
-			glm::vec3(0.0, 0.0, 27.0),//pos 
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.0215, 0.1745, 0.0215),// AmbientLightColor
 			glm::vec3(0.07568, 0.61424, 0.07568),// LightDiffuseColor
@@ -198,7 +195,6 @@ void Manager::updateLightAttrs()
 		break;
 	case Cyan :
 		((Piece*)Objs->find(0)->second)->setLigthAttrs(
-			glm::vec3(0.0, 0.0, 27.0),//pos 
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.0, 0.1, 0.06),// AmbientLightColor
 			glm::vec3(0.0, 0.50980392, 0.50980392),// LightDiffuseColor
@@ -260,4 +256,10 @@ void Manager::setTexStone()
 {
 	Piece * piece = (Piece*)Objs->find(0)->second;
 	piece->getTexture()->load("..\\textures\\stone.tga");
+}
+
+void Manager::updateLightPos(bool direction)
+{
+	Piece * piece = (Piece*)Objs->find(0)->second;
+	piece->setLigthPos(direction);
 }

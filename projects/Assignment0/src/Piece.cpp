@@ -70,6 +70,7 @@ void Piece::setLigthAttrs(	glm::vec3 LightPosition,
 	glUseProgram(progID);
 
 	glUniform3f(glGetUniformLocation(progID, "LightPosition"), LightPosition.x, LightPosition.y, LightPosition.z);
+	lightPos = LightPosition;
 	glUniform2f(glGetUniformLocation(progID, "LightAttenuation"), LightAttenuation.x, LightAttenuation.y);
 	glUniform3f(glGetUniformLocation(progID, "AmbientLightColor"), AmbientLightColor.x, AmbientLightColor.y, AmbientLightColor.z);
 	glUniform3f(glGetUniformLocation(progID, "LightDiffuseColor"), LightDiffuseColor.x, LightDiffuseColor.y, LightDiffuseColor.z);
@@ -79,6 +80,47 @@ void Piece::setLigthAttrs(	glm::vec3 LightPosition,
 	glUniform3f(glGetUniformLocation(progID, "MaterialDiffuseColor"), MaterialDiffuseColor.x, MaterialDiffuseColor.y, MaterialDiffuseColor.z);
 	glUniform3f(glGetUniformLocation(progID, "MaterialSpecularColor"), MaterialSpecularColor.x, MaterialSpecularColor.y, MaterialSpecularColor.z);
 	glUniform1f(glGetUniformLocation(progID, "MaterialShininess"), MaterialShininess);
+}
+
+void Piece::setLigthAttrs(glm::vec2 LightAttenuation,
+	glm::vec3 AmbientLightColor,
+	glm::vec3 LightDiffuseColor,
+	glm::vec3 LightSpecularColor,
+	glm::vec3 MaterialAmbientColor,
+	glm::vec3 MaterialDiffuseColor,
+	glm::vec3 MaterialSpecularColor,
+	float MaterialShininess)
+{
+	progID = shaderProg->getProgram();
+
+	glUseProgram(progID);
+
+	glUniform2f(glGetUniformLocation(progID, "LightAttenuation"), LightAttenuation.x, LightAttenuation.y);
+	glUniform3f(glGetUniformLocation(progID, "AmbientLightColor"), AmbientLightColor.x, AmbientLightColor.y, AmbientLightColor.z);
+	glUniform3f(glGetUniformLocation(progID, "LightDiffuseColor"), LightDiffuseColor.x, LightDiffuseColor.y, LightDiffuseColor.z);
+	glUniform3f(glGetUniformLocation(progID, "LightSpecularColor"), LightSpecularColor.x, LightSpecularColor.y, LightSpecularColor.z);
+
+	glUniform3f(glGetUniformLocation(progID, "MaterialAmbientColor"), MaterialAmbientColor.x, MaterialAmbientColor.y, MaterialAmbientColor.z);
+	glUniform3f(glGetUniformLocation(progID, "MaterialDiffuseColor"), MaterialDiffuseColor.x, MaterialDiffuseColor.y, MaterialDiffuseColor.z);
+	glUniform3f(glGetUniformLocation(progID, "MaterialSpecularColor"), MaterialSpecularColor.x, MaterialSpecularColor.y, MaterialSpecularColor.z);
+	glUniform1f(glGetUniformLocation(progID, "MaterialShininess"), MaterialShininess);
+}
+
+void Piece::setLigthPos(bool direction)
+{
+	progID = shaderProg->getProgram();
+
+	glUseProgram(progID);
+
+	if (direction){
+		glUniform3f(glGetUniformLocation(progID, "LightPosition"), lightPos.x, lightPos.y, lightPos.z + 1.0);
+		lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z + 1.0);
+	}
+	else{
+		glUniform3f(glGetUniformLocation(progID, "LightPosition"), lightPos.x, lightPos.y, lightPos.z - 1.0);
+		lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z - 1.0);
+	}
+
 }
 
 

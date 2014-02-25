@@ -23,6 +23,7 @@ protected:
 	glm::mat4 scale;
 	glm::mat4 initTransformation;
 	glm::mat4 transformation;
+	glm::vec3 lightPos;
 
 	ShaderProgram* shaderProg;
 	Texture * tex;
@@ -55,6 +56,17 @@ public:
 						glm::vec3 MaterialDiffuseColor,
 						glm::vec3 MaterialSpecularColor,
 						float MaterialShininess);
+
+	void setLigthAttrs(glm::vec2 LightAttenuation,
+		glm::vec3 AmbientLightColor,
+		glm::vec3 LightDiffuseColor,
+		glm::vec3 LightSpecularColor,
+		glm::vec3 MaterialAmbientColor,
+		glm::vec3 MaterialDiffuseColor,
+		glm::vec3 MaterialSpecularColor,
+		float MaterialShininess);
+
+	void setLigthPos(bool direction);
 
 	void createBufferObject();
 	void addIndex(unsigned int v);
