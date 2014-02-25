@@ -4,6 +4,7 @@ void Interface::initInterface(int val)
 {
 	WindowHandle = val;
 	cameraMode = false;
+	rotationMode = false;
 }
 
 void Interface::displayWindow()
@@ -23,13 +24,21 @@ void Interface::setWindowHandle(int val)
 
 void Interface::onMouse(int button, int state, int x, int y)
 {
-	/*
-	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	if (rotationMode)
 	{
-
-		GLUT_LEFT_BUTTON
-			GLUT_MIDDLE_BUTTON
-	}*/
+		if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+		{
+			Manager::getInstance().torquePiece(1, X_AXIS);
+		}
+		else if (button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
+		{
+			Manager::getInstance().torquePiece(1, Y_AXIS);
+		}
+		else if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		{
+			Manager::getInstance().torquePiece(1, Z_AXIS);
+		}
+	}
 }
 
 void Interface::mouseWheel(int button, int dir, int x, int y)
@@ -65,6 +74,7 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 		if (rotationMode)
 		{
 			rotationMode = false;
+			Manager::getInstance().torquePiece(1, -1);
 		}
 		else
 		{
@@ -85,10 +95,6 @@ void Interface::passiveMotionFunc(int x, int y)
 	if (cameraMode)
 	{
 		Manager::getInstance().updateCameraRotation(x, y);
-	}
-	else if (rotationMode)
-	{
-		/***/
 	}
 	Manager::getInstance().updateLastMXY(x, y);
 }

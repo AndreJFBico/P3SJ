@@ -33,7 +33,8 @@ public:
 	void updateCameraPosition(float x, float y);
 	void updateCameraZoom(int amount);
 	void updateLastMXY(float x, float y);
-	void transformPiece(int ID, int move, float tx);
+	void transformPiece(int ID, int axis, float tx, int Transformation);
+	void torquePiece(int ID, int axis);
 
 	Piece* getPiece(int ID);
 

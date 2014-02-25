@@ -17,7 +17,7 @@ void Manager::initScene()
 	Texture* tex = new Texture2D();
 	PieceReader::getInstance().readObject("..\\objects\\teapot.obj");
 	tex->load("..\\textures\\stone.tga");
-	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0);	
+	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 1);	
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 
@@ -29,6 +29,11 @@ void Manager::draw()
 	for (std::unordered_map<int, Drawable*>::iterator it = Objs->begin(); it != Objs->end(); ++it)
 	{
 		it->second->draw(camera->getViewMatrix(), camera->getProjectionMatrix(), camera->computeCameraCenter());
+		Piece* p = (Piece*) it->second;
+		if (p->getTorque() != -1)
+		{
+			transformPiece(p->getID(), p->getTorque(), 2, ROTATE);
+		}
 	}
 }
 
@@ -65,35 +70,27 @@ Piece* Manager::getPiece(int ID)
 	return (Piece*)Objs->find(ID)->second;
 }
 
-void Manager::transformPiece(int ID, int move, float tx)
+void Manager::torquePiece(int ID, int axis)
+{
+	if (ID != 0.0)
+	{
+		Piece* piece = getPiece(ID);
+		piece->torquePiece(axis);
+	}
+}
+
+void Manager::transformPiece(int ID, int axis, float tx, int Transformation)
 {
 	if (ID != 0.0) {
 		Piece* piece = getPiece(ID);
 		if (piece != NULL)
 		{
-			if (move == 1) {
-				manipulator->manipulatePiece(piece, TRANSLATE, X_AXIS, tx / 100);
-			}
-			else if (move == 2) {
-				manipulator->manipulatePiece(piece, TRANSLATE, Y_AXIS, tx / 100);
-			}
-			else if (move == 3) {
-				manipulator->manipulatePiece(piece, TRANSLATE, Z_AXIS, tx / 100);
-			}
-			else if (move == 4) {
-				manipulator->manipulatePiece(piece, ROTATE, X_AXIS, tx / 1000);
-			}
-			else if (move == 5) {
-				manipulator->manipulatePiece(piece, ROTATE, Y_AXIS, tx / 1000);
-			}
-			else if (move == 6) {
-				manipulator->manipulatePiece(piece, ROTATE, Z_AXIS, tx / 1000);
-			}
-			else if (move == 7) {
+			if (Transformation == SCALE) {
 				manipulator->manipulatePiece(piece, SCALE, X_AXIS, tx / 1000);
 				manipulator->manipulatePiece(piece, SCALE, Y_AXIS, tx / 1000);
 				manipulator->manipulatePiece(piece, SCALE, Z_AXIS, tx / 1000);
 			}
+			else manipulator->manipulatePiece(piece, Transformation, axis, tx / 100);
 		}
 	}
 }
