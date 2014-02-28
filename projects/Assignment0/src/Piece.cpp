@@ -22,11 +22,12 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 					64.0f);
 	createBufferObject();
 	tex = 0;
+	tex1 = 0;
 	variation = 0.0;
 	setLines = false;
 }
 
-Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, Texture* t, int ident) : Drawable()
+Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, Texture* t, Texture* t1,int ident) : Drawable()
 {
 	id = ident;
 	vertexes = vs;
@@ -36,6 +37,7 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	initTransformation = glm::mat4(1.0f);
 	transformation = glm::mat4(1.0f);
 	tex = t;
+	tex1 = t1;
 	setLigthAttrs(	glm::vec3(0.0, 0.0, 27.0),
 					glm::vec2(0.0f, 0.0005f),
 					glm::vec3(0.3f, 0.3f, 0.3f),
@@ -177,11 +179,25 @@ void Piece::prepareDraw(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::v
 	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), &projectionMatrix);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-	if (tex != 0)
+	if (tex != 0 && tex1 != 0)
 	{
-		tex->actBindTexture();
+		tex->actBindTexture(0);
+		glUniform1i(glGetUniformLocation(progID, "Texture0"), 0);
+		tex1->actBindTexture(1);
+		glUniform1i(glGetUniformLocation(progID, "Texture1"), 1);
+		glUniform1f(glGetUniformLocation(progID, "textured"), true);
+	}
+	else if (tex != 0 )
+	{
+		tex->actBindTexture(0);
 		glUniform1f(glGetUniformLocation(progID, "textured"), true);
 		glUniform1i(glGetUniformLocation(progID, "Texture0"), 0);
+	}
+	else if (tex1 != 0)
+	{
+		tex1->actBindTexture(1);
+		glUniform1f(glGetUniformLocation(progID, "textured"), true);
+		glUniform1i(glGetUniformLocation(progID, "Texture0"), 1);
 	}
 	else
 	{

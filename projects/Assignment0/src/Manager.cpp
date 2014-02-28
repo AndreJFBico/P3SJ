@@ -16,9 +16,11 @@ void Manager::initScene()
 	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader.glsl", "..\\shaders\\fragment_shader.glsl");
 
 	Texture* tex = new Texture2D();
+	Texture* tex1 = new Texture2D();
 	PieceReader::getInstance().readObject("..\\objects\\teapot.obj");
 	tex->load("..\\textures\\stone.tga");
-	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0);	
+	tex1->load("..\\textures\\fire.tga");
+	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, 0);	
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 	PieceReader::getInstance().clearAll();

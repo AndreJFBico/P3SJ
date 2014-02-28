@@ -9,9 +9,16 @@ Texture2D::Texture2D() : Texture()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
-void Texture2D::actBindTexture() 
+void Texture2D::actBindTexture(int texChannel) 
 {
-	glActiveTexture(GL_TEXTURE0);
+	if (texChannel == 0)
+	{
+		glActiveTexture(GL_TEXTURE0);
+	}
+	else if (texChannel == 1)
+	{
+		glActiveTexture(GL_TEXTURE1);
+	}
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 }
 

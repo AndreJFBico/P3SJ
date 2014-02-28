@@ -11,7 +11,6 @@ public:
 	void load(const std::string& filename);
 	void loadmipmap();
 	void bind();
-	void actBindTexture();
+	void actBindTexture(int texChannel);
 	void createPerlinNoise(int side,double x, double y, double a, double b, int n);
-
 };

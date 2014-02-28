@@ -26,7 +26,7 @@ protected:
 	glm::vec3 lightPos;
 
 	ShaderProgram* shaderProg;
-	Texture * tex;
+	Texture * tex, * tex1;
 
 	std::vector<Vertex> vertexes;
 	std::vector<unsigned int> indices;
@@ -37,7 +37,7 @@ protected:
 public:
 	Piece();
 	Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, int ident);
-	Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, Texture* t, int ident);
+	Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, Texture* t, Texture* t1, int ident);
 
 	Drawable* clone();
 

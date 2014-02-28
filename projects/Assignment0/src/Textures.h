@@ -17,7 +17,7 @@ public:
 	virtual void load(const std::string& filename) = 0;
 	void bind();
 	void unbind();
-	virtual void actBindTexture() = 0;
+	virtual void actBindTexture(int texChannel) = 0;
 
 	GLuint *getTexture(){ return texture;}
 	GLenum getType() { return type;}
