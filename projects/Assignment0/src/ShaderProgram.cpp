@@ -131,6 +131,10 @@ GLuint ShaderProgram::getFragmentShaderId() {
 	return FragmentShaderId;
 }
 
+GLint ShaderProgram::getUBO_BP(){
+	return UBO_BP;
+}
+
 ShaderProgram::~ShaderProgram(void) {
 
 	glUseProgram(0);
