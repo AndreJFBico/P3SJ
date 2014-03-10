@@ -306,3 +306,8 @@ void Piece::addScaleTransformation(glm::mat4 m)
 {
 	scale = scale * m;
 }
+
+void Piece::noTex(){
+	tex = 0;
+	tex1 = 0;
+}

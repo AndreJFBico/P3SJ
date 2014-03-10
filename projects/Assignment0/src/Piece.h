@@ -93,6 +93,7 @@ public:
 
 	void translate(glm::vec3 vec);
 	void reset();
+	void noTex();
 
 	glm::mat4 createModelMatrix();
 };

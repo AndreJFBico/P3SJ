@@ -13,12 +13,12 @@ void Manager::initScene()
 	camera->setPerspective(tFOVY, WINDOW_WIDTH / WINDOW_HEIGHT, tNEAR, tFAR);
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader.glsl", "..\\shaders\\fragment_shader.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\SphereM_vertex_shader.glsl", "..\\shaders\\SphereM_fragment_shader.glsl");
 
 	Texture* tex = new Texture2D();
 	Texture* tex1 = new Texture2D();
-	PieceReader::getInstance().readObject("..\\objects\\teapot.obj");
-	tex->load("..\\textures\\stone.tga");
+	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
+	tex->load("..\\textures\\SphereMap3.psd");
 	tex1->load("..\\textures\\fire.tga");
 	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, 0);	
 	std::pair<int, Piece*> val(p->getID(), p);
@@ -364,4 +364,10 @@ void Manager::updateLightPos(bool direction)
 {
 	Piece * piece = (Piece*)Objs->find(0)->second;
 	piece->setLigthPos(direction);
+}
+
+void Manager::setPieceNoTex()
+{
+	Piece * piece = (Piece*)Objs->find(0)->second;
+	piece->noTex();
 }

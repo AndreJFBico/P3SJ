@@ -169,6 +169,12 @@
     <None Include="..\objects\teapot.obj">
       <Filter>Resource Files\objects</Filter>
     </None>
+    <None Include="..\shaders\SphereM_vertex_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\SphereM_fragment_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\textures\stone.tga">

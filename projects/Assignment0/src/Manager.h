@@ -56,6 +56,7 @@ public:
 	void setTexStone();
 	void setTexFire();
 	void updateLightPos(bool direction);
+	void setPieceNoTex();
 
 	Piece* getPiece(int ID);
 
