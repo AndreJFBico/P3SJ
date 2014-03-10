@@ -99,6 +99,15 @@
     <ClCompile Include="..\src\Manipulator.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\CubemapTexture.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Skybox.cpp">
+      <Filter>Source Files\Piece</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ShaderManager.cpp">
+      <Filter>Source Files\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Includes.h">
@@ -136,6 +145,18 @@
     </ClInclude>
     <ClInclude Include="..\src\Manipulator.h">
       <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CubemapTexture.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Skybox.h">
+      <Filter>Header Files\Piece</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderManager.h">
+      <Filter>Header Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TextureManager.h">
+      <Filter>Header Files\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

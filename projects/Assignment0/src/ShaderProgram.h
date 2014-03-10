@@ -28,6 +28,7 @@ public:
 	GLuint getProgram();
 	GLuint getVertexShaderId();
 	GLuint getFragmentShaderId();
+	GLint getUBO_BP();
 
 	~ShaderProgram();
 
