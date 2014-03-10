@@ -13,13 +13,13 @@ void Manager::initScene()
 	camera->setPerspective(tFOVY, WINDOW_WIDTH / WINDOW_HEIGHT, tNEAR, tFAR);
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader_bump.glsl", "..\\shaders\\fragment_shader_bump.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\SphereM_vertex_shader.glsl", "..\\shaders\\SphereM_fragment_shader.glsl");
 
 	Texture* tex = new Texture2D();
 	Texture* tex1 = new Texture2D();
 	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
-	tex->load("..\\textures\\stone.tga");
-	tex1->load("..\\textures\\stone_normal.tga");
+	tex->load("..\\textures\\SphereMap.psd");
+	tex1->load("..\\textures\\fire.tga");
 	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, 0);	
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
