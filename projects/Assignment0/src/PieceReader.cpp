@@ -104,6 +104,7 @@ void PieceReader::readObject(std::string fpath)
 			v.NORMAL = normals->at(c);
 
 			s.ignore(256, ' ');
+			v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
 			vertices->push_back(v);
 		}
 		else if (line[0] == '#') { /* ignoring this line */ }

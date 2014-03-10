@@ -13,13 +13,13 @@ void Manager::initScene()
 	camera->setPerspective(tFOVY, WINDOW_WIDTH / WINDOW_HEIGHT, tNEAR, tFAR);
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader.glsl", "..\\shaders\\fragment_shader.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader_bump.glsl", "..\\shaders\\fragment_shader_bump.glsl");
 
 	Texture* tex = new Texture2D();
 	Texture* tex1 = new Texture2D();
-	PieceReader::getInstance().readObject("..\\objects\\teapot.obj");
+	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
 	tex->load("..\\textures\\stone.tga");
-	tex1->load("..\\textures\\fire.tga");
+	tex1->load("..\\textures\\stone_normal.tga");
 	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, 0);	
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
@@ -92,16 +92,16 @@ void Manager::addGrid(float x, float y, float z, float size)
 	for (int i = -HALF_GRID_SIZE; i <= HALF_GRID_SIZE; i++)
 	{
 		v.XYZW = glm::vec4((float)i, 0, (float)-HALF_GRID_SIZE, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-		v.NORMAL = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		v.NORMAL = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
 		vertexes->push_back(v);
 		v.XYZW = glm::vec4((float)i, 0, (float)HALF_GRID_SIZE, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
 		vertexes->push_back(v);
 		v.XYZW = glm::vec4((float)-HALF_GRID_SIZE, 0, (float)i, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
 		vertexes->push_back(v);
 		v.XYZW = glm::vec4((float)HALF_GRID_SIZE, 0, (float)i, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
 		vertexes->push_back(v);
 	}
 
@@ -143,7 +143,7 @@ void Manager::updateLightAttrs()
 	case Default:
 		((Piece*)Objs->find(0)->second)->setLigthAttrs(
 			glm::vec2(0.0f, 0.0005f),
-			glm::vec3(0.3f, 0.3f, 0.3f),
+			glm::vec3(0.1f, 0.1f, 0.1f),
 			glm::vec3(0.9f, 0.9f, 0.9f),
 			glm::vec3(0.9f, 0.9f, 0.9f),
 			glm::vec3(0.8f, 0.8f, 0.8f),
@@ -243,6 +243,7 @@ ShaderProgram* Manager::createShaderProgram(std::string vertexShaderPath, std::s
 	glBindAttribLocation(shProg->getProgram(), COLORS, "in_Color");
 	glBindAttribLocation(shProg->getProgram(), NORMALS, "in_Normal");
 	glBindAttribLocation(shProg->getProgram(), TEXTURE, "in_Texture");
+	glBindAttribLocation(shProg->getProgram(), TANGENT, "in_Tangent");
 	shProg->link();
 
 	return shProg;
