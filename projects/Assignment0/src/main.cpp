@@ -84,7 +84,7 @@ void setupCallbacks()
 
 void setupOpenGL() {
 	std::cerr << "CONTEXT: OpenGL v" << glGetString(GL_VERSION) << std::endl;
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	/* Configuration of the Open GL renderer */
 	/*Enable back face culling*/
 	glEnable(GL_CULL_FACE);

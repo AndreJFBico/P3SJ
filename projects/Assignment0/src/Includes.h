@@ -19,6 +19,7 @@
 #define COLORS 1
 #define NORMALS 2
 #define TEXTURE 3
+#define TANGENT 4
 
 #define ROTATE 0
 #define TRANSLATE 1
