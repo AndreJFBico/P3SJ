@@ -37,6 +37,7 @@ public:
 
 	void initManager();
 	void initScene();
+	void initBumpedSphere();
 	void draw();
 
 	void updateCameraRotation(float x, float y);

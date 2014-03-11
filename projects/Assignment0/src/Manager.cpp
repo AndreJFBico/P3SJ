@@ -13,6 +13,15 @@ void Manager::initScene()
 	camera->setPerspective(tFOVY, WINDOW_WIDTH / WINDOW_HEIGHT, tNEAR, tFAR);
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
+
+	initBumpedSphere();
+
+	addGrid(-0.5, 0.0, 0.0, 1.0f);
+	updateLightAttrs();
+}
+
+void Manager::initBumpedSphere()
+{
 	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader_bump.glsl", "..\\shaders\\fragment_shader_bump.glsl");
 
 	Texture* tex = new Texture2D();
@@ -20,13 +29,10 @@ void Manager::initScene()
 	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
 	tex->load("..\\textures\\stone.tga");
 	tex1->load("..\\textures\\stone_normal.tga");
-	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, 0);	
+	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, 0);
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 	PieceReader::getInstance().clearAll();
-
-	addGrid(-0.5, 0.0, 0.0, 1.0f);
-	updateLightAttrs();
 }
 
 void Manager::draw()
