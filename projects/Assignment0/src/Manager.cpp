@@ -13,19 +13,22 @@ void Manager::initScene()
 	camera->setPerspective(tFOVY, WINDOW_WIDTH / WINDOW_HEIGHT, tNEAR, tFAR);
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
+	//ShaderProgram* sh = createShaderProgram("..\\shaders\\CubeM_vertex_shader.glsl", "..\\shaders\\CubeM_fragment_shader.glsl");
 	ShaderProgram* sh = createShaderProgram("..\\shaders\\SphereM_vertex_shader.glsl", "..\\shaders\\SphereM_fragment_shader.glsl");
 
 	Texture* tex = new Texture2D();
+	//Texture* tex = new CubemapTexture();
 	Texture* tex1 = new Texture2D();
 	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
 	tex->load("..\\textures\\SphereMap.psd");
+	//tex->load("");
 	tex1->load("..\\textures\\fire.tga");
 	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, 0);	
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 	PieceReader::getInstance().clearAll();
 
-	addSkybox();
+	//addSkybox();
 	addGrid(-0.5, 0.0, 0.0, 1.0f);
 	updateLightAttrs();
 }

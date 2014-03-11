@@ -180,6 +180,8 @@ void Piece::setLigthAttrs(
 	glUniform3f(glGetUniformLocation(progID, "MaterialDiffuseColor"), MaterialDiffuseColor.x, MaterialDiffuseColor.y, MaterialDiffuseColor.z);
 	glUniform3f(glGetUniformLocation(progID, "MaterialSpecularColor"), MaterialSpecularColor.x, MaterialSpecularColor.y, MaterialSpecularColor.z);
 	glUniform1f(glGetUniformLocation(progID, "MaterialShininess"), MaterialShininess);
+
+	glUniform1i(glGetUniformLocation(progID, "u_cubemap"), 1);
 }
 
 void Piece::setLigthAttrs(
