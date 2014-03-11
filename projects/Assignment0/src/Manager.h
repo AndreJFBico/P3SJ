@@ -65,6 +65,6 @@ public:
 	int getNewId();
 	Piece* getPiece(int ID);
 
-	ShaderProgram *createShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath);
+	ShaderProgram *createShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath, bool withTang);
 
 };

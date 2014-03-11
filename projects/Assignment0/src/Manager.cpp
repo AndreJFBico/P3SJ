@@ -15,12 +15,12 @@ void Manager::initScene()
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
 
-	//addSkybox();
+	addSkybox();
 	initCubeMap();
 	initSphereMapping();
 	initBumpedSphere();
 
-	//addGrid(-0.5, 0.0, 0.0, 1.0f);
+	addGrid(-0.5, 0.0, 0.0, 1.0f);
 	incLightAttr();
 }
 
@@ -31,7 +31,7 @@ int Manager::getNewId()
 
 void Manager::initCubeMap()
 {
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\CubeM_vertex_shader.glsl", "..\\shaders\\CubeM_fragment_shader.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\CubeM_vertex_shader.glsl", "..\\shaders\\CubeM_fragment_shader.glsl", true);
 	Texture* tex = new CubemapTexture();
 	tex->load("");
 	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
@@ -45,7 +45,7 @@ void Manager::initCubeMap()
 
 void Manager::initSphereMapping()
 {
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\SphereM_vertex_shader.glsl", "..\\shaders\\SphereM_fragment_shader.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\SphereM_vertex_shader.glsl", "..\\shaders\\SphereM_fragment_shader.glsl", true);
 	Texture* tex = new Texture2D();
 	tex->load("..\\textures\\SphereMap.psd");
 	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
@@ -57,7 +57,7 @@ void Manager::initSphereMapping()
 
 void Manager::initBumpedSphere()
 {
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader_bump.glsl", "..\\shaders\\fragment_shader_bump.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader_bump.glsl", "..\\shaders\\fragment_shader_bump.glsl", true);
 	Texture* tex = new Texture2D();
 	Texture* tex1 = new Texture2D();
 	tex->load("..\\textures\\stone2.tga");
@@ -124,7 +124,7 @@ void Manager::setRotType(int rottype)
 
 void Manager::addGrid(float x, float y, float z, float size)
 {
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader.glsl", "..\\shaders\\fragment_shader.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader.glsl", "..\\shaders\\fragment_shader.glsl", true);
 	Vertex v;
 	std::vector<Vertex> *vertexes = new std::vector<Vertex>;
 	std::vector<unsigned int> *indexes = new std::vector<unsigned int>;
@@ -163,7 +163,7 @@ void Manager::addGrid(float x, float y, float z, float size)
 
 void Manager::addSkybox()
 {
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\skybox_vertex_shader.glsl", "..\\shaders\\skybox_frag_shader.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\skybox_vertex_shader.glsl", "..\\shaders\\skybox_frag_shader.glsl", false);
 
 	Vertex v;
 	std::vector<Vertex> *vertexes = new std::vector<Vertex>;
@@ -250,7 +250,7 @@ void Manager::addSkybox()
 	vertexes->push_back(v);
 	CubemapTexture *texture = new CubemapTexture();
 	texture->load("");
-	skybox = new Skybox(sh, *vertexes, skybox->getID());
+	skybox = new Skybox(sh, *vertexes, getNewId());
 	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(-0.25, 0.0, 0.0))));
 	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -0.25, 0.0))));
 	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -0.25))));
@@ -378,7 +378,7 @@ void Manager::updateRotation()
 
 }
 
-ShaderProgram* Manager::createShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath)
+ShaderProgram* Manager::createShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath, bool withTang)
 {
 	ShaderProgram *shProg = new ShaderProgram();
 
@@ -389,7 +389,8 @@ ShaderProgram* Manager::createShaderProgram(std::string vertexShaderPath, std::s
 	glBindAttribLocation(shProg->getProgram(), COLORS, "in_Color");
 	glBindAttribLocation(shProg->getProgram(), NORMALS, "in_Normal");
 	glBindAttribLocation(shProg->getProgram(), TEXTURE, "in_Texture");
-	glBindAttribLocation(shProg->getProgram(), TANGENT, "in_Tangent");
+	if (withTang)
+		glBindAttribLocation(shProg->getProgram(), TANGENT, "in_Tangent");
 	shProg->link();
 
 	return shProg;
@@ -409,8 +410,10 @@ void Manager::setTexStone()
 
 void Manager::updateLightPos(bool direction)
 {
-	Piece * piece = (Piece*)Objs->find(0)->second;
-	piece->setLigthPos(direction);
+	for (std::unordered_map<int, Drawable*>::iterator p = Objs->begin(); p != Objs->end(); p++)
+	{
+		((Piece*)((*p).second))->setLigthPos(direction);
+	}
 }
 
 void Manager::setPieceNoTex()

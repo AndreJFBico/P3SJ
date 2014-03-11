@@ -26,7 +26,6 @@ layout(std140) uniform SharedMatrices
 
 /**/
 in vec3 reflected;
-in vec3 texcoordT;
 /**/
 
 in vec4 ex_Vertex;
@@ -65,10 +64,11 @@ void main(void)
 
 	float attenuation = 1 / (1.0 +LightAttenuation.x * Ldist + LightAttenuation.y * pow(Ldist,2));
 
-	vec4 reflectionColor = texture(u_cubemap, normalize(reflected));
+	//vec4 reflectionColor = texture(u_cubemap, reflected);
+	vec4 reflectionColor = texture(u_cubemap, normalize(vec3 (inverse (ViewMatrix) * vec4 (reflected, 0.0))));
 
 	if(textured)
-		colorOut = texture(u_cubemap, reflected) * vec4((ambient + (diffuse + specular) * attenuation),1.0);
+		colorOut = reflectionColor * vec4((ambient + (diffuse + specular) * attenuation),1.0);
 	else 
 		colorOut = ex_Color * vec4((ambient + (diffuse + specular) * attenuation),1.0);
 }
