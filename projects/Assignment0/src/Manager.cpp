@@ -150,7 +150,7 @@ void Manager::addGrid(float x, float y, float z, float size)
 		indexes->push_back(i);
 	}
 
-	Piece *p = new Piece(*vertexes, *indexes, sh, 2);
+	Piece *p = new Piece(*vertexes, *indexes, sh, getNewId());
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 	p->drawWithLines();
