@@ -25,6 +25,7 @@ void Manager::initScene()
 	Objs->insert(val);
 	PieceReader::getInstance().clearAll();
 
+	//addSkybox(); gotta be added
 	addGrid(-0.5, 0.0, 0.0, 1.0f);
 	updateLightAttrs();
 }
@@ -122,8 +123,7 @@ void Manager::addGrid(float x, float y, float z, float size)
 
 void Manager::addSkybox()
 {
-	/*
-	createShaderProgram("..\\src\\skybox_vertex_shader.glsl", "..\\src\\skybox_frag_shader.glsl", "skybox");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\CubeM_vertex_shader.glsl", "..\\shaders\\CubeM_fragment_shader.glsl");
 
 	Vertex v;
 	std::vector<Vertex> *vertexes = new std::vector<Vertex>;
@@ -208,14 +208,16 @@ void Manager::addSkybox()
 	vertexes->push_back(v);
 	v.XYZW = glm::vec4(size, 0.0f, 0.0f, 1.0f), v.RGBA = glm::vec4(0.9f, 0.9f, 0.0f, 1.0f), v.NORMAL = glm::vec4(0.0f, -1.0, 0.0f, 1.0f), v.UV = glm::vec2(1.0f, 0.0f);  // 5
 	vertexes->push_back(v);
-	//CubemapTexture *texture = new CubemapTexture();
+	CubemapTexture *texture = new CubemapTexture();
 	texture->load("");
-	tManager->add("cubemap", (Texture*)texture);
-	skybox = new Skybox(sManager->getShaderProgram("skybox"), *vertexes);
+	skybox = new Skybox(sh, *vertexes);
 	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(-0.25, 0.0, 0.0))));
 	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -0.25, 0.0))));
 	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -0.25))));
 	skybox->addTransformation(glm::transpose(glm::scale(glm::mat4(1.0f), glm::vec3(1292.0, 1292.0, 1292.0))));
+	/* gotta be changed
+	std::pair<int, Piece*> val(skybox->getID(), skybox);
+	Objs->insert(val);
 	*/
 }
 

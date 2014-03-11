@@ -11,6 +11,6 @@ public:
 	void load(const std::string& filename);
 	void loadmipmap();
 	void bind();
-	void actBindTexture();
+	void actBindTexture(int texChannel);
 
 };

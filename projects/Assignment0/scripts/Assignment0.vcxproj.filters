@@ -175,12 +175,36 @@
     <None Include="..\shaders\SphereM_fragment_shader.glsl">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="..\shaders\CubeM_fragment_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\CubeM_vertex_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\textures\stone.tga">
       <Filter>Resource Files\textures</Filter>
     </Image>
     <Image Include="..\textures\fire.tga">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\negx.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\negy.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\negz.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\posx.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\posy.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\posz.jpg">
       <Filter>Resource Files\textures</Filter>
     </Image>
   </ItemGroup>

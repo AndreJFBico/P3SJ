@@ -45,6 +45,8 @@
     <ClInclude Include="..\src\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\shaders\CubeM_fragment_shader.glsl" />
+    <None Include="..\shaders\CubeM_vertex_shader.glsl" />
     <None Include="..\shaders\fragment_shader.glsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
@@ -56,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\textures\fire.tga" />
+    <Image Include="..\textures\negx.jpg" />
+    <Image Include="..\textures\negy.jpg" />
+    <Image Include="..\textures\negz.jpg" />
+    <Image Include="..\textures\posx.jpg" />
+    <Image Include="..\textures\posy.jpg" />
+    <Image Include="..\textures\posz.jpg" />
     <Image Include="..\textures\stone.tga" />
   </ItemGroup>
   <ItemGroup>
