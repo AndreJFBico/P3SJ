@@ -9,6 +9,7 @@ in vec4 in_Position;
 in vec4 in_Color;
 in vec4 in_Normal;
 in vec2 in_Texture;
+in vec4 in_Tangent;
 
 layout(std140) uniform SharedMatrices
 {
