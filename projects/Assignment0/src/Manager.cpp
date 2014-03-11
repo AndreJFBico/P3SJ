@@ -5,7 +5,8 @@ void Manager::initManager()
 	Objs = new std::unordered_map<int, Drawable*>;
 	camera = new Camera();
 	manipulator = new Manipulator();
-	lightAttrs = Default;
+	lightAttrs = Cyan;
+	globalId = 0;
 }
 
 void Manager::initScene()
@@ -14,22 +15,55 @@ void Manager::initScene()
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
 
+	initCubeMap();
+	initSphereMapping();
 	initBumpedSphere();
 
 	addGrid(-0.5, 0.0, 0.0, 1.0f);
-	updateLightAttrs();
+	incLightAttr();
+}
+
+int Manager::getNewId()
+{
+	return globalId++;
+}
+
+void Manager::initCubeMap()
+{
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\CubeM_vertex_shader.glsl", "..\\shaders\\CubeM_fragment_shader.glsl");
+	Texture* tex = new CubemapTexture();
+	tex->load("");
+	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
+	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0, getNewId());
+	manipulator->translate(p, X_AXIS, -2);
+	p->setCubemapped(true);
+	std::pair<int, Piece*> val(p->getID(), p);
+	Objs->insert(val);
+	PieceReader::getInstance().clearAll();
+}
+
+void Manager::initSphereMapping()
+{
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\SphereM_vertex_shader.glsl", "..\\shaders\\SphereM_fragment_shader.glsl");
+	Texture* tex = new Texture2D();
+	tex->load("..\\textures\\SphereMap.psd");
+	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
+	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0, getNewId());
+	std::pair<int, Piece*> val(p->getID(), p);
+	Objs->insert(val);
+	PieceReader::getInstance().clearAll();
 }
 
 void Manager::initBumpedSphere()
 {
 	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader_bump.glsl", "..\\shaders\\fragment_shader_bump.glsl");
-
 	Texture* tex = new Texture2D();
 	Texture* tex1 = new Texture2D();
+	tex->load("..\\textures\\stone2.tga");
+	tex1->load("..\\textures\\stone2_normal.tga");
 	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
-	tex->load("..\\textures\\stone.tga");
-	tex1->load("..\\textures\\stone_normal.tga");
-	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, 0);
+	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, getNewId());
+	manipulator->translate(p, X_AXIS, 2);
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 	PieceReader::getInstance().clearAll();
@@ -37,7 +71,7 @@ void Manager::initBumpedSphere()
 
 void Manager::draw()
 {
-	
+
 	updateRotation();
 	for (std::unordered_map<int, Drawable*>::iterator it = Objs->begin(); it != Objs->end(); ++it)
 	{
@@ -98,16 +132,16 @@ void Manager::addGrid(float x, float y, float z, float size)
 	for (int i = -HALF_GRID_SIZE; i <= HALF_GRID_SIZE; i++)
 	{
 		v.XYZW = glm::vec4((float)i, 0, (float)-HALF_GRID_SIZE, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-		v.NORMAL = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
+		v.NORMAL = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 1.0);
 		vertexes->push_back(v);
 		v.XYZW = glm::vec4((float)i, 0, (float)HALF_GRID_SIZE, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 1.0);
 		vertexes->push_back(v);
 		v.XYZW = glm::vec4((float)-HALF_GRID_SIZE, 0, (float)i, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 1.0);
 		vertexes->push_back(v);
 		v.XYZW = glm::vec4((float)HALF_GRID_SIZE, 0, (float)i, 1.0f), v.RGBA = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 0.0);
+		v.NORMAL = glm::vec4(0.0f, 1.0, 0.0f, 1.0f), v.TANG = glm::vec4(0.0, 0.0, 0.0, 1.0);
 		vertexes->push_back(v);
 	}
 
@@ -128,8 +162,7 @@ void Manager::addGrid(float x, float y, float z, float size)
 
 void Manager::addSkybox()
 {
-	/*
-	createShaderProgram("..\\src\\skybox_vertex_shader.glsl", "..\\src\\skybox_frag_shader.glsl", "skybox");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\CubeM_vertex_shader.glsl", "..\\shaders\\CubeM_fragment_shader.glsl");
 
 	Vertex v;
 	std::vector<Vertex> *vertexes = new std::vector<Vertex>;
@@ -214,14 +247,16 @@ void Manager::addSkybox()
 	vertexes->push_back(v);
 	v.XYZW = glm::vec4(size, 0.0f, 0.0f, 1.0f), v.RGBA = glm::vec4(0.9f, 0.9f, 0.0f, 1.0f), v.NORMAL = glm::vec4(0.0f, -1.0, 0.0f, 1.0f), v.UV = glm::vec2(1.0f, 0.0f);  // 5
 	vertexes->push_back(v);
-	//CubemapTexture *texture = new CubemapTexture();
+	CubemapTexture *texture = new CubemapTexture();
 	texture->load("");
-	tManager->add("cubemap", (Texture*)texture);
-	skybox = new Skybox(sManager->getShaderProgram("skybox"), *vertexes);
+	skybox = new Skybox(sh, *vertexes);
 	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(-0.25, 0.0, 0.0))));
 	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -0.25, 0.0))));
 	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -0.25))));
 	skybox->addTransformation(glm::transpose(glm::scale(glm::mat4(1.0f), glm::vec3(1292.0, 1292.0, 1292.0))));
+	/* gotta be changed
+	std::pair<int, Piece*> val(skybox->getID(), skybox);
+	Objs->insert(val);
 	*/
 }
 
@@ -239,15 +274,18 @@ void Manager::incLightAttr()
 		lightAttrs = Cyan;
 	else if (lightAttrs == Cyan)
 		lightAttrs = Default;
-	updateLightAttrs();
+	for (std::unordered_map<int, Drawable*>::iterator p = Objs->begin(); p != Objs->end(); p++)
+	{
+		updateLightAttrs((*p).first);
+	}
 }
 
-void Manager::updateLightAttrs()
+void Manager::updateLightAttrs(int id)
 {
 	switch (lightAttrs)
 	{
 	case Default:
-		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+		((Piece*)Objs->find(id)->second)->setLigthAttrs(
 			glm::vec2(0.0f, 0.0005f),
 			glm::vec3(0.1f, 0.1f, 0.1f),
 			glm::vec3(0.9f, 0.9f, 0.9f),
@@ -258,7 +296,7 @@ void Manager::updateLightAttrs()
 			64.0f);
 		break;
 	case Ruby:
-		((Piece*)Objs->find(0)->second)->setLigthAttrs( 
+		((Piece*)Objs->find(id)->second)->setLigthAttrs(
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.1745, 0.01175, 0.01175),// AmbientLightColor
 			glm::vec3(0.61424, 0.04136, 0.04136),// LightDiffuseColor
@@ -269,7 +307,7 @@ void Manager::updateLightAttrs()
 			0.6 * 128);
 		break;
 	case Gold:
-		((Piece*)Objs->find(0)->second)->setLigthAttrs( 
+		((Piece*)Objs->find(id)->second)->setLigthAttrs(
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.24725, 0.1995, 0.0745),// AmbientLightColor
 			glm::vec3(0.75164, 0.60648, 0.22648),// LightDiffuseColor
@@ -280,7 +318,7 @@ void Manager::updateLightAttrs()
 			0.4 * 128);
 		break;
 	case Silver:
-		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+		((Piece*)Objs->find(id)->second)->setLigthAttrs(
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.19225, 0.19225, 0.19225),// AmbientLightColor
 			glm::vec3(0.50754, 0.50754, 0.50754),// LightDiffuseColor
@@ -291,7 +329,7 @@ void Manager::updateLightAttrs()
 			0.4 * 128);
 		break;
 	case Esmerald:
-		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+		((Piece*)Objs->find(id)->second)->setLigthAttrs(
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.0215, 0.1745, 0.0215),// AmbientLightColor
 			glm::vec3(0.07568, 0.61424, 0.07568),// LightDiffuseColor
@@ -299,10 +337,10 @@ void Manager::updateLightAttrs()
 			glm::vec3(0.8f, 0.8f, 0.8f),// MaterialAmbientColor
 			glm::vec3(0.9f, 0.9f, 0.9f),// MaterialDiffuseColor
 			glm::vec3(0.9f, 0.9f, 0.9f),//MaterialSpecularColor
-			0.6*128);
+			0.6 * 128);
 		break;
-	case Cyan :
-		((Piece*)Objs->find(0)->second)->setLigthAttrs(
+	case Cyan:
+		((Piece*)Objs->find(id)->second)->setLigthAttrs(
 			glm::vec2(0.0f, 0.0005f),//attenuation
 			glm::vec3(0.0, 0.1, 0.06),// AmbientLightColor
 			glm::vec3(0.0, 0.50980392, 0.50980392),// LightDiffuseColor
@@ -371,4 +409,10 @@ void Manager::updateLightPos(bool direction)
 {
 	Piece * piece = (Piece*)Objs->find(0)->second;
 	piece->setLigthPos(direction);
+}
+
+void Manager::setPieceNoTex()
+{
+	Piece * piece = (Piece*)Objs->find(0)->second;
+	piece->noTex();
 }

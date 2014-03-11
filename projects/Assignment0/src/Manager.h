@@ -17,6 +17,7 @@ enum rotType { NONE, ROTX, ROTY, ROTZ };
 
 class Manager
 {
+	int globalId;
 	int rotation;
 	lightAttr lightAttrs;
 	std::unordered_map<int, Drawable*> *Objs;
@@ -37,6 +38,8 @@ public:
 
 	void initManager();
 	void initScene();
+	void initCubeMap();
+	void initSphereMapping();
 	void initBumpedSphere();
 	void draw();
 
@@ -44,7 +47,7 @@ public:
 	void updateCameraPosition(float x, float y);
 	void updateCameraZoom(int amount);
 	void updateLastMXY(float x, float y);
-	void updateLightAttrs();
+	void updateLightAttrs(int id);
 
 	void addGrid(float x, float y, float z, float size);
 	void addSkybox();
@@ -57,7 +60,9 @@ public:
 	void setTexStone();
 	void setTexFire();
 	void updateLightPos(bool direction);
+	void setPieceNoTex();
 
+	int getNewId();
 	Piece* getPiece(int ID);
 
 	ShaderProgram *createShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath);

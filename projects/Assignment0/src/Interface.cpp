@@ -88,6 +88,10 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 	{
 		Manager::getInstance().updateLightPos(1);
 	}
+	else if (key == 'n')
+	{
+		Manager::getInstance().setPieceNoTex();
+	}
 }
 
 void Interface::specialkeyPressed(int key, int x, int y)

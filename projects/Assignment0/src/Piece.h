@@ -12,7 +12,7 @@ class Piece : public Drawable
 protected:
 	int id;
 
-	bool setLines;
+	bool setLines, cubemapped;
 
 	/*Variation on the current move towards the objective.*/
 	float variation;
@@ -83,6 +83,7 @@ public:
 
 	void setId(int id);
 	void setColor();
+	void setCubemapped(bool v);
 	void setOrientation(glm::fquat orientation);
 	void setTransformation(glm::mat4 transformation);
 
@@ -92,8 +93,8 @@ public:
 	glm::fquat getOrientation();
 	glm::mat4 getTransformation();
 
-	void translate(glm::vec3 vec);
 	void reset();
+	void noTex();
 
 	glm::mat4 createModelMatrix();
 };

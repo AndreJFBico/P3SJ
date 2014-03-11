@@ -81,5 +81,5 @@ void main(void)
 	if(textured)
 		colorOut = (texture(Texture0, ex_Texcoord) /*+ texture(Texture1, ex_Texcoord)*/) * vec4((ambient + (diffuse + specular) * attenuation),1.0);
 	else 
-		colorOut = ex_Color;
+		colorOut = ex_Color * vec4((ambient + (diffuse + specular) * attenuation),1.0);
 }

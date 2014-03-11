@@ -27,6 +27,7 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	createBufferObject();
 	variation = 0.0;
 	setLines = false;
+	cubemapped = false;
 }
 
 Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, Texture* t, Texture* t1,int ident) : Drawable()
@@ -54,6 +55,7 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	createBufferObject();
 	variation = 0.0;
 	setLines = false;
+	cubemapped = false;
 }
 
 void Piece::genTangentVec()
@@ -289,9 +291,18 @@ void Piece::prepareDraw(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::v
 	}
 	else if (tex != 0 )
 	{
-		tex->actBindTexture(0);
-		glUniform1f(glGetUniformLocation(progID, "textured"), true);
-		glUniform1i(glGetUniformLocation(progID, "Texture0"), 0);
+		if (cubemapped)
+		{
+			tex->actBindTexture(0);
+			glUniform1f(glGetUniformLocation(progID, "textured"), true);
+			glUniform1i(glGetUniformLocation(progID, "u_cubemap"), 0);
+		} 
+		else
+		{
+			tex->actBindTexture(0);
+			glUniform1f(glGetUniformLocation(progID, "textured"), true);
+			glUniform1i(glGetUniformLocation(progID, "Texture0"), 0);
+		}
 	}
 	else if (tex1 != 0)
 	{
@@ -382,6 +393,11 @@ void Piece::setOrientation(glm::fquat ori)
 	orientation = ori;
 }
 
+void Piece::setCubemapped(bool v)
+{
+	cubemapped = v;
+}
+
 glm::fquat Piece::getOrientation()
 {
 	return orientation;
@@ -405,4 +421,9 @@ void Piece::addTransformation(glm::mat4 m)
 void Piece::addScaleTransformation(glm::mat4 m)
 {
 	scale = scale * m;
+}
+
+void Piece::noTex(){
+	tex = 0;
+	tex1 = 0;
 }
