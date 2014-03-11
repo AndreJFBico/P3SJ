@@ -2,8 +2,9 @@
 #include "Includes.h"
 #include "ShaderProgram.h"
 #include "Vertex.h"
+#include "Piece.h"
 
-class Skybox
+class Skybox : public Piece
 {
 	glm::fquat orientation;
 	glm::mat4 transformation;
@@ -16,7 +17,7 @@ class Skybox
 
 public:
 	Skybox(void);
-	Skybox(ShaderProgram* prog, std::vector<Vertex> vertexes);
+	Skybox(ShaderProgram* prog, std::vector<Vertex> vertexes, int ident);
 	~Skybox(void);
 
 	///GETTERS & SETTERS

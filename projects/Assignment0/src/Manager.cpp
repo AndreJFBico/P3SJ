@@ -15,11 +15,12 @@ void Manager::initScene()
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
 
+	//addSkybox();
 	initCubeMap();
 	initSphereMapping();
 	initBumpedSphere();
 
-	addGrid(-0.5, 0.0, 0.0, 1.0f);
+	//addGrid(-0.5, 0.0, 0.0, 1.0f);
 	incLightAttr();
 }
 
@@ -162,7 +163,7 @@ void Manager::addGrid(float x, float y, float z, float size)
 
 void Manager::addSkybox()
 {
-	ShaderProgram* sh = createShaderProgram("..\\shaders\\CubeM_vertex_shader.glsl", "..\\shaders\\CubeM_fragment_shader.glsl");
+	ShaderProgram* sh = createShaderProgram("..\\shaders\\skybox_vertex_shader.glsl", "..\\shaders\\skybox_frag_shader.glsl");
 
 	Vertex v;
 	std::vector<Vertex> *vertexes = new std::vector<Vertex>;
@@ -249,15 +250,16 @@ void Manager::addSkybox()
 	vertexes->push_back(v);
 	CubemapTexture *texture = new CubemapTexture();
 	texture->load("");
-	skybox = new Skybox(sh, *vertexes);
-	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(-0.25, 0.0, 0.0))));
-	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -0.25, 0.0))));
-	skybox->addCenterTransformation(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -0.25))));
+	skybox = new Skybox(sh, *vertexes, skybox->getID());
+	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(-0.25, 0.0, 0.0))));
+	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -0.25, 0.0))));
+	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -0.25))));
 	skybox->addTransformation(glm::transpose(glm::scale(glm::mat4(1.0f), glm::vec3(1292.0, 1292.0, 1292.0))));
-	/* gotta be changed
+	skybox->setCubemapped(true);
 	std::pair<int, Piece*> val(skybox->getID(), skybox);
 	Objs->insert(val);
-	*/
+	//PieceReader::getInstance().clearAll();
+
 }
 
 void Manager::incLightAttr()
@@ -276,7 +278,7 @@ void Manager::incLightAttr()
 		lightAttrs = Default;
 	for (std::unordered_map<int, Drawable*>::iterator p = Objs->begin(); p != Objs->end(); p++)
 	{
-		updateLightAttrs((*p).first);
+			updateLightAttrs((*p).first);
 	}
 }
 

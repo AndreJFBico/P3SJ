@@ -43,9 +43,6 @@
     <Filter Include="Source Files\Piece">
       <UniqueIdentifier>{ad212fa7-1999-4aa8-8c70-d46e1f0fac42}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Texture">
-      <UniqueIdentifier>{3a118900-e081-4902-a91a-6a84d7873457}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Texture">
       <UniqueIdentifier>{ad1a4f1e-8cca-4b2a-bf5b-aacec10f5502}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,9 @@
     </Filter>
     <Filter Include="Resource Files\shaders">
       <UniqueIdentifier>{fb394e76-cd1a-4543-8ba1-0e17ee568f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shader\Texture">
+      <UniqueIdentifier>{3a118900-e081-4902-a91a-6a84d7873457}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,10 +135,10 @@
       <Filter>Header Files\Piece</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Texture2D.h">
-      <Filter>Header Files\Texture</Filter>
+      <Filter>Header Files\Shader\Texture</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Textures.h">
-      <Filter>Header Files\Texture</Filter>
+      <Filter>Header Files\Shader\Texture</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PieceReader.h">
       <Filter>Header Files\ObjReader</Filter>
@@ -147,7 +147,7 @@
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\src\CubemapTexture.h">
-      <Filter>Header Files\Texture</Filter>
+      <Filter>Header Files\Shader\Texture</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Skybox.h">
       <Filter>Header Files\Piece</Filter>
@@ -156,7 +156,7 @@
       <Filter>Header Files\Shader</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TextureManager.h">
-      <Filter>Header Files\Texture</Filter>
+      <Filter>Header Files\Shader\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,9 +165,6 @@
     </None>
     <None Include="..\shaders\vertex_shader.glsl">
       <Filter>Resource Files\shaders</Filter>
-    </None>
-    <None Include="..\objects\teapot.obj">
-      <Filter>Resource Files\objects</Filter>
     </None>
     <None Include="..\shaders\SphereM_vertex_shader.glsl">
       <Filter>Resource Files\shaders</Filter>
@@ -179,6 +176,15 @@
       <Filter>Resource Files\shaders</Filter>
     </None>
     <None Include="..\shaders\CubeM_vertex_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="..\objects\sphere.obj">
+      <Filter>Resource Files\objects</Filter>
+    </None>
+    <None Include="..\shaders\skybox_frag_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\skybox_vertex_shader.glsl">
       <Filter>Resource Files\shaders</Filter>
     </None>
   </ItemGroup>
@@ -205,6 +211,12 @@
       <Filter>Resource Files\textures</Filter>
     </Image>
     <Image Include="..\textures\posz.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\stone2.tga">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="..\textures\stone2_normal.tga">
       <Filter>Resource Files\textures</Filter>
     </Image>
   </ItemGroup>

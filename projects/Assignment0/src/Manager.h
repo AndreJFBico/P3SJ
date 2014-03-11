@@ -24,7 +24,7 @@ class Manager
 
 	Camera * camera;
 	Manipulator * manipulator;
-	Skybox *skybox;
+	Piece *skybox;
 
 	Manager() {};
 	Manager(Manager const&);

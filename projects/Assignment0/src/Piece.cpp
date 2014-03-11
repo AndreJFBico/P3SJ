@@ -2,6 +2,35 @@
 
 Piece::Piece() : Drawable() {}
 
+Piece::Piece(std::vector<Vertex> vs, ShaderProgram* prog, int ident) : Drawable()
+{
+	id = ident;
+	vertexes = vs;
+	for (int i = 0; i < vs.size(); i++){
+		indices.push_back(i);
+	}
+	shaderProg = prog;
+	scale = glm::mat4(1.0f);
+	initTransformation = glm::mat4(1.0f);
+	transformation = glm::mat4(1.0f);
+	setLigthAttrs(
+		glm::vec3(0.0, 0.0, 27.0),
+		glm::vec2(0.0f, 0.0005f),
+		glm::vec3(0.1f, 0.3f, 0.3f),
+		glm::vec3(0.9f, 0.9f, 0.9f),
+		glm::vec3(0.9f, 0.9f, 0.9f),
+		glm::vec3(0.8f, 0.8f, 0.8f),
+		glm::vec3(0.9f, 0.9f, 0.9f),
+		glm::vec3(0.9f, 0.9f, 0.9f),
+		64.0f);
+	tex = 0;
+	tex1 = 0;
+	genTangentVec();
+	createBufferObject();
+	variation = 0.0;
+	setLines = false;
+}
+
 Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, int ident) : Drawable()
 {
 	id = ident;

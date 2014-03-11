@@ -2,7 +2,7 @@
 
 Skybox::Skybox(void){}
 
-Skybox::Skybox(ShaderProgram* prog, std::vector<Vertex> vertexes) : shaderProg(prog)
+Skybox::Skybox(ShaderProgram* prog, std::vector<Vertex> vertexes, int ident) : shaderProg(prog), Piece(vertexes, prog, ident)
 {
 	Vertexes = vertexes;
 	createBufferObject();

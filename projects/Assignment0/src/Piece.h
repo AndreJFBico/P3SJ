@@ -38,6 +38,7 @@ public:
 	Piece();
 	Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, int ident);
 	Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram* prog, Texture* t, Texture* t1, int ident);
+	Piece(std::vector<Vertex> vs, ShaderProgram* prog, int ident);
 
 	Drawable* clone();
 
