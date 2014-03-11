@@ -18,27 +18,27 @@ void CubemapTexture::load(const std::string& filename)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, texture[0]);
 
-	image = SOIL_load_image("..\\textures\\posx.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("..\\textures\\posx.jpg", &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 
-	image = SOIL_load_image("..\\textures\\negx.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("..\\textures\\negx.jpg", &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 
-	image = SOIL_load_image("..\\textures\\posy.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("..\\textures\\posy.jpg", &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 
-	image = SOIL_load_image("..\\textures\\negy.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("..\\textures\\negy.jpg", &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 
-	image = SOIL_load_image("..\\textures\\posz.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("..\\textures\\posz.jpg", &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 
-	image = SOIL_load_image("..\\textures\\negz.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("..\\textures\\negz.jpg", &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 
