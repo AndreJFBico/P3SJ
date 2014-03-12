@@ -34,7 +34,7 @@ void main () {
 	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;
 	ex_Color = in_Color;
 
-	//Building the matrix Eye Space -> Tangent Space
+	//Building the matrix(TBN) to go to Tangent Space
 	tangN = ex_Normal;
 	tangT = normalize(NormalMatrix * vec3(in_Tangent));
 	tangB = in_Tangent.w * cross(tangN, tangT);

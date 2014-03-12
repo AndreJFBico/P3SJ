@@ -40,26 +40,31 @@ void main(void)
 
 	vec3 V = vec3(ex_Vertex);
 
-	//lookup normal from normal map
+	//lookup normal obtained from normal map
 	vec3 N = vec3(2.0 * texture(Texture1, ex_Texcoord) - 1.0);
 	
-	vec3 Lpos = vec3(ViewMatrix * vec4(LightPosition, 1.0f));//luz em eyespace
+	vec3 Lpos = vec3(ViewMatrix * vec4(LightPosition, 1.0f));//light em eyespace
 	vec3 L = Lpos - V;
 
 	float Ldist = length(L);
+	//Aplying TBN matrix to L vector
 	vec3 v;
 	v.x = dot(L, tangT);
 	v.y = dot(L, tangB);
 	v.z = dot(L, tangN);
 	L = normalize(v);
+	/*------------------------*/
+
 	vec3 E = normalize(-V);//eyespace a posição da camera é 0,0,0
 	vec3 H = normalize(L + E);
 	vec3 R = reflect(-L,N);//eyespace a posição da camera é 0,0,0
 	
+	//Aplying TBN matrix to the half vector
 	v.x = dot(H, tangT);
 	v.y = dot(H, tangB);
 	v.z = dot(H, tangN);
 	H = normalize(v);
+	/*------------------------*/
 
 	vec3 ambient = AmbientLightColor * MaterialAmbientColor;//chega ao objecto de igual forma
 	
