@@ -425,13 +425,19 @@ void Manager::updateRotation()
 	case NONE:
 		break;
 	case ROTX:
-		manipulator->manipulatePiece((Piece*)Objs->find(0)->second, ROTATE, X_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(2)->second, ROTATE, X_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(3)->second, ROTATE, X_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(4)->second, ROTATE, X_AXIS, 10);
 		break;
 	case ROTY:
-		manipulator->manipulatePiece((Piece*)Objs->find(0)->second, ROTATE, Y_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(2)->second, ROTATE, Y_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(3)->second, ROTATE, Y_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(4)->second, ROTATE, Y_AXIS, 10);
 		break;
 	case ROTZ:
-		manipulator->manipulatePiece((Piece*)Objs->find(0)->second, ROTATE, Z_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(2)->second, ROTATE, Z_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(3)->second, ROTATE, Z_AXIS, 10);
+		manipulator->manipulatePiece((Piece*)Objs->find(4)->second, ROTATE, Z_AXIS, 10);
 		break;
 	default:
 		break;
