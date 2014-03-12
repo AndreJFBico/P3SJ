@@ -38,7 +38,7 @@ void Camera::OffsetOrientation(glm::vec3 &_axis, float fAngDeg)
 glm::vec3 Camera::computeCameraCenter()
 {
 	glm::vec3 r = glm::vec3(glm::vec4(center.x, center.y, center.z, 0.0) * glm::mat4_cast(orientation));
-	return glm::vec3(-r.x, -r.y, r.z);
+	return glm::vec3(-r.x, -r.y, -r.z);
 }
 
 void Camera::createViewMatrix( float centerx, float centery, float centerz)

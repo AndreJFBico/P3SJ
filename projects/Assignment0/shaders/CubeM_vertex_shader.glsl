@@ -33,23 +33,14 @@ void main () {
 	ex_Normal = normalize(NormalMatrix * vec3(in_Normal));
 	ex_Texcoord = vec2(in_Texture.x, 1.0-in_Texture.y);;
 	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * MCVertex;
-
-
-
-  	vec3 pos_eye = vec3 (ModelViewMatrix * in_Position);
+  	
+  	/*vec3 pos_eye = vec3 (ModelViewMatrix * in_Position);
  	vec3 n_eye = vec3(NormalMatrix * vec3(in_Normal));
 
  	vec3 incident_eye = normalize (pos_eye);
-  	vec3 normal = normalize (n_eye);
-
-  	reflected = normalize(reflect (incident_eye, normal));
-  	//reflected = vec3(in_Position);
-
-	//vec3 u = normalize( vec3(ModelViewMatrix * in_Position) );
-	//vec3 n = normalize( NormalMatrix * vec3(in_Normal) );
-	//reflected = normalize(reflect(u, n));
-
-
-  //	vec3 incident_eye = normalize(vec3((ModelMatrix * MCVertex) - vec4(cameraEye, 1.0)));
-	//reflected = reflect(incident_eye, vec3(normalize(transpose(inverse(ModelMatrix))*(in_Normal))));
+  	vec3 normal = normalize (n_eye);*/
+  	vec3 incident_eye = normalize((ModelMatrix * MCVertex).xyz - cameraEye);
+	vec3 g = reflect(incident_eye, normalize(mat3(transpose(inverse(ModelMatrix)))*(vec3(in_Normal))));
+	reflected = vec3(g.x, -g.yz);
+  	//reflected = normalize(reflect (incident_eye, normal));
 }
