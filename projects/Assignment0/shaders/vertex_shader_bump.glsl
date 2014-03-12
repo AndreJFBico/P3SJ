@@ -5,7 +5,6 @@ uniform mat3 NormalMatrix;
 
 uniform vec3 cameraEye;
 
-
 in vec4 in_Position;
 in vec4 in_Color;
 in vec4 in_Normal;

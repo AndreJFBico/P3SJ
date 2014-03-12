@@ -339,7 +339,7 @@ void Piece::sendModelMatrix(glm::mat4 viewMatrix, glm::mat4 modelMatrix)
 {
 	glUniformMatrix4fv(unifID, 1, GL_TRUE, glm::value_ptr(modelMatrix));
 	//15% performance hazard due to inverse plus 2 transposes
-	glUniformMatrix3fv(normalID, 1, GL_FALSE, glm::value_ptr(glm::mat3(glm::transpose(glm::inverse(viewMatrix *modelMatrix)))));
+	glUniformMatrix3fv(normalID, 1, GL_FALSE, glm::value_ptr(glm::mat3(glm::transpose(glm::inverse(viewMatrix *glm::transpose(modelMatrix))))));
 }
 
 void Piece::bindDraw()
