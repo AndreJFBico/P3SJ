@@ -1,6 +1,6 @@
 #version 330 core
 
-uniform sampler2D Texture0;
+uniform samplerCube u_cubemap;
 
 uniform bool textured;
 
@@ -24,6 +24,10 @@ layout(std140) uniform SharedMatrices
 	mat4 ProjectionMatrix;
 };
 
+/**/
+in vec3 reflected;
+/**/
+
 in vec4 ex_Vertex;
 in vec3 ex_Normal;
 in vec2 ex_Texcoord;
@@ -36,27 +40,21 @@ void main(void)
 
 	vec3 V = vec3(ex_Vertex);
 	vec3 N = normalize(ex_Normal);
-
-	//luz em eyespace
-	vec3 Lpos = vec3(ViewMatrix * vec4(LightPosition, 1.0f));
+	
+	vec3 Lpos = vec3(ViewMatrix * vec4(LightPosition, 1.0f));//luz em eyespace
 	vec3 L = Lpos - V;
 	float Ldist = length(L);
 	L = normalize(L);
-
-	//eyespace a posição da camera é 0,0,0
-	vec3 E = normalize(-V);
+	vec3 E = normalize(-V);//eyespace a posição da camera é 0,0,0
 	vec3 H = normalize(L + E);
+	vec3 R = reflect(-L,N);//eyespace a posição da camera é 0,0,0
 	
-	//eyespace a posição da camera é 0,0,0
-	vec3 R = reflect(-L,N);
-	
-	//chega ao objecto de igual forma
-	vec3 ambient = AmbientLightColor * MaterialAmbientColor;
+	vec3 ambient = AmbientLightColor * MaterialAmbientColor;//chega ao objecto de igual forma
 	
 	float NdotL = clamp(dot(N,L),0.0,1.0);
 	vec3 diffuse = LightDiffuseColor * MaterialDiffuseColor * NdotL;
-	
 	//reflecção especular
+	
 	vec3 specular = vec3(0.0);
 	if(NdotL > 0.0) {
 		float NdotH = clamp(dot(R,H),0.0,1.0);
@@ -65,9 +63,12 @@ void main(void)
 	}
 
 	float attenuation = 1 / (1.0 +LightAttenuation.x * Ldist + LightAttenuation.y * pow(Ldist,2));
-	
+
+	vec4 reflectionColor = texture(u_cubemap,vec3(reflected.x,reflected.y,reflected.z)); //cor para meter no fragmento
+
 	if(textured)
-		colorOut = texture(Texture0, ex_Texcoord) * vec4((ambient + (diffuse + specular) * attenuation),1.0);
+		colorOut = reflectionColor * vec4((ambient + (diffuse + specular) * attenuation),1.0); //se for um objecto com textura entao
+		                                                                                       //a cor = textura+blinn phong
 	else 
 		colorOut = ex_Color * vec4((ambient + (diffuse + specular) * attenuation),1.0);
 }

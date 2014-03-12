@@ -27,11 +27,16 @@ void main () {
 
 	vec3 Vertex = vec3(ModelViewMatrix * in_Position);
 	vec3 n = normalize(NormalMatrix * vec3(in_Normal));
-	vec3 e = vec3(0.0, 0.0, -1.0);
 	
+	//vector from the world center to the vertex
 	vec3 u = normalize(Vertex);
-	vec3 r = e - 2*n*(dot(n, e));
+	
+	//reflected ray
+	vec3 r = u - 2*n*(dot(n, u));
+	
 	float p = sqrt(2.0*(r.z + 1.0));
+	
+	// Texture coordinates s and t. Because OpenGL inverts the texture, we negate the the t coordinate.
 	float s = r.x/(2.0*p) + 0.5;
 	float t = -r.y/(2.0*p) + 0.5;
 
