@@ -58,7 +58,7 @@ public:
 	void updateCameraZoom(int amount);
 	void updateLastMXY(float x, float y);
 	void updateLightAttrs(int id);
-	void moveLight(int direction);
+	void moveCamera(int direction);
 
 	void addGrid(float x, float y, float z, float size);
 	void addSkybox();

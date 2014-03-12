@@ -116,29 +116,24 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 
 void Interface::specialkeyPressed(int key, int x, int y)
 {
-	x = x - WINDOW_WIDTH / 2.0f;
-	y = -(y - WINDOW_HEIGHT / 2.0f);
+	x = 10;
+	y = 10;
 	if (key == GLUT_KEY_LEFT)
 	{
-		Manager::getInstance().updateCameraPosition(x, y);
-		Manager::getInstance().updateLastMXY(x, y);
+		Manager::getInstance().moveCamera(0);
 	}
 	else if (key == GLUT_KEY_RIGHT)
 	{
-		Manager::getInstance().updateCameraPosition(x, y);
-		Manager::getInstance().updateLastMXY(x, y);
+		Manager::getInstance().moveCamera(1);
 	}
 	else if (key == GLUT_KEY_UP)
 	{
-		Manager::getInstance().updateCameraPosition(x, y);
-		Manager::getInstance().updateLastMXY(x, y);
+		Manager::getInstance().moveCamera(2);
 	}
 	else if (key == GLUT_KEY_DOWN)
 	{
-		Manager::getInstance().updateCameraPosition(x, y);
-		Manager::getInstance().updateLastMXY(x, y);
+		Manager::getInstance().moveCamera(3);
 	}
-	Manager::getInstance().updateLastMXY(x, y);
 }
 
 void Interface::passiveMotionFunc(int x, int y)

@@ -425,9 +425,27 @@ void Manager::updateLightAttrs(int id)
 	}
 }
 
-void Manager::moveLight(int direction)
+void Manager::moveCamera(int direction)
 {
+	glm::vec3 oldcenter = camera->getCenter();
 
+	switch (direction)
+	{
+	case 0:
+		camera->setCenter(glm::vec3(oldcenter.x + 1.0, oldcenter.y, oldcenter.z));
+		break;
+	case 1:
+		camera->setCenter(glm::vec3(oldcenter.x - 1.0, oldcenter.y, oldcenter.z));
+		break;
+	case 2:
+		camera->setCenter(glm::vec3(oldcenter.x, oldcenter.y - 1.0, oldcenter.z));
+		break;
+	case 3:
+		camera->setCenter(glm::vec3(oldcenter.x, oldcenter.y + 1.0, oldcenter.z));
+		break;
+	default:
+		break;
+	}
 }
 
 void Manager::updateRotation()
