@@ -64,7 +64,7 @@ void main(void)
 
 	float attenuation = 1 / (1.0 +LightAttenuation.x * Ldist + LightAttenuation.y * pow(Ldist,2));
 	vec3 ref = vec3(reflected.x, reflected.y, reflected.z);
-	vec4 reflectionColor = texture(u_cubemap,vec3(-reflected.x,-reflected.y,-reflected.z));
+	vec4 reflectionColor = texture(u_cubemap,vec3(reflected.x,-reflected.y,-reflected.z));
 	//vec4 reflectionColor = texture(u_cubemap, normalize(vec3 (inverse (ViewMatrix) * vec4 (ref, 0.0))));
 
 	if(textured)
