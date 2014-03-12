@@ -33,7 +33,7 @@ void main () {
 	vec3 r = e - 2*n*(dot(n, e));
 	float p = sqrt(2.0*(r.z + 1.0));
 	float s = r.x/(2.0*p) + 0.5;
-	float t = r.y/(2.0*p) + 0.5;
+	float t = -r.y/(2.0*p) + 0.5;
 
 	ex_Vertex = (ModelViewMatrix * in_Position);
 	ex_Normal = normalize(NormalMatrix * vec3(in_Normal));

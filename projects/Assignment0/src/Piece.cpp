@@ -16,7 +16,7 @@ Piece::Piece(std::vector<Vertex> vs, ShaderProgram* prog, int ident) : Drawable(
 	setLigthAttrs(
 		glm::vec3(0.0, 0.0, 27.0),
 		glm::vec2(0.0f, 0.0005f),
-		glm::vec3(0.1f, 0.3f, 0.3f),
+		glm::vec3(0.1f, 0.1f, 0.1f),
 		glm::vec3(0.9f, 0.9f, 0.9f),
 		glm::vec3(0.9f, 0.9f, 0.9f),
 		glm::vec3(0.8f, 0.8f, 0.8f),
@@ -43,7 +43,7 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	setLigthAttrs(	
 	glm::vec3(0.0, 0.0, 27.0),
 	glm::vec2(0.0f, 0.0005f),
-	glm::vec3(0.1f, 0.3f, 0.3f),
+	glm::vec3(0.1f, 0.1f, 0.1f),
 	glm::vec3(0.9f, 0.9f, 0.9f),
 	glm::vec3(0.9f, 0.9f, 0.9f),
 	glm::vec3(0.8f, 0.8f, 0.8f),
@@ -73,12 +73,12 @@ Piece::Piece(std::vector<Vertex> vs, std::vector<unsigned int> is, ShaderProgram
 	setLigthAttrs(	
 	glm::vec3(0.0, 0.0, 27.0),
 	glm::vec2(0.0f, 0.0005f),
-	glm::vec3(1.0f, 1.0f, 1.0f),
+	glm::vec3(0.1f, 0.1f, 0.1f),
 	glm::vec3(0.9f, 0.9f, 0.9f),
 	glm::vec3(0.9f, 0.9f, 0.9f),
-	glm::vec3(1.0f, 1.0f, 1.0f),
 	glm::vec3(0.8f, 0.8f, 0.8f),
-	glm::vec3(1.0f, 1.0f, 1.0f),
+	glm::vec3(0.9f, 0.9f, 0.9f),
+	glm::vec3(0.9f, 0.9f, 0.9f),
 	64.0f);
 	genTangentVec();
 	createBufferObject();
@@ -144,38 +144,7 @@ void Piece::genTangentVec()
 			v1->TANG = glm::vec4(0.0, 1.0, 0.0, 1.0);
 			v2->TANG = glm::vec4(0.0, 1.0, 0.0, 1.0);
 			v3->TANG = glm::vec4(0.0, 1.0, 0.0, 1.0);
-			/*glm::vec4 Edge1 = vertexes.at(i + 1).XYZW - vertexes.at(i).XYZW;
-			glm::vec4 Edge2 = vertexes.at(i + 2).XYZW - vertexes.at(i).XYZW;
-
-			float DeltaU1 = vertexes.at(i + 1).UV.x - vertexes.at(i).UV.x;
-			float DeltaV1 = vertexes.at(i + 1).UV.y - vertexes.at(i).UV.y;
-			float DeltaU2 = vertexes.at(i + 2).UV.x - vertexes.at(i).UV.x;
-			float DeltaV2 = vertexes.at(i + 2).UV.y - vertexes.at(i).UV.y;
-
-			float f = 1.0f / (DeltaU1 * DeltaV2 - DeltaU2 * DeltaV1);
-			glm::vec4 Tangent;
-			glm::vec3 Bitangent;
-			Tangent.x = f * (DeltaV2 * Edge1.x - DeltaV1 * Edge2.x);
-			Tangent.y = f * (DeltaV2 * Edge1.y - DeltaV1 * Edge2.y);
-			Tangent.z = f * (DeltaV2 * Edge1.z - DeltaV1 * Edge2.z);
-
-			Bitangent.x = f * (-DeltaU2 * Edge1.x - DeltaU1 * Edge2.x);
-			Bitangent.y = f * (-DeltaU2 * Edge1.y - DeltaU1 * Edge2.y);
-			Bitangent.z = f * (-DeltaU2 * Edge1.z - DeltaU1 * Edge2.z);
-
-			// Gram-Schmidt orthogonalize
-			vertexes.at(i).TANG = Tangent - (glm::dot((vertexes.at(i).NORMAL), Tangent))* (vertexes.at(i).NORMAL);
-			vertexes.at(i + 1).TANG = Tangent - (glm::dot((vertexes.at(i + 1).NORMAL), Tangent))* (vertexes.at(i + 1).NORMAL);
-			vertexes.at(i + 2).TANG = Tangent - (glm::dot((vertexes.at(i + 2).NORMAL), Tangent))* (vertexes.at(i + 2).NORMAL);
-		
-			vertexes.at(i).TANG = glm::normalize(vertexes.at(i).TANG - vertexes.at(i).NORMAL * (glm::dot(vertexes.at(i).NORMAL, vertexes.at(i).TANG)));
-			vertexes.at(i + 1).TANG = glm::normalize(vertexes.at(i + 1).TANG - vertexes.at(i + 1).NORMAL * (glm::dot(vertexes.at(i + 1).NORMAL, vertexes.at(i + 1).TANG)));
-			vertexes.at(i + 2).TANG = glm::normalize(vertexes.at(i + 2).TANG - vertexes.at(i + 2).NORMAL * (glm::dot(vertexes.at(i + 2).NORMAL, vertexes.at(i + 2).TANG)));
-
-			//handeness
-			vertexes.at(i).TANG.w = glm::dot(glm::cross(glm::vec3(vertexes.at(i).NORMAL), glm::vec3(vertexes.at(i).TANG)), Bitangent);
-			vertexes.at(i + 1).TANG.w = glm::dot(glm::cross(glm::vec3(vertexes.at(i + 1).NORMAL), glm::vec3(vertexes.at(i + 1).TANG)), Bitangent);
-			vertexes.at(i + 2).TANG.w = glm::dot(glm::cross(glm::vec3(vertexes.at(i + 2).NORMAL), glm::vec3(vertexes.at(i + 2).TANG)), Bitangent);*/
+			
 		}
 	}
 }
@@ -238,19 +207,40 @@ void Piece::setLigthAttrs(
 	glUniform1f(glGetUniformLocation(progID, "MaterialShininess"), MaterialShininess);
 }
 
-void Piece::setLigthPos(bool direction)
+void Piece::setLigthPos(int direction)
 {
 	progID = shaderProg->getProgram();
 
 	glUseProgram(progID);
 
-	if (direction){
+	switch (direction)
+	{
+	case 0:
 		glUniform3f(glGetUniformLocation(progID, "LightPosition"), lightPos.x, lightPos.y, lightPos.z + 1.0);
 		lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z + 1.0);
-	}
-	else{
+		break;
+	case 1:
 		glUniform3f(glGetUniformLocation(progID, "LightPosition"), lightPos.x, lightPos.y, lightPos.z - 1.0);
 		lightPos = glm::vec3(lightPos.x, lightPos.y, lightPos.z - 1.0);
+		break;
+	case 2:
+		glUniform3f(glGetUniformLocation(progID, "LightPosition"), lightPos.x, lightPos.y + 1.0, lightPos.z);
+		lightPos = glm::vec3(lightPos.x, lightPos.y + 1.0, lightPos.z );
+		break;
+	case 3:
+		glUniform3f(glGetUniformLocation(progID, "LightPosition"), lightPos.x, lightPos.y - 1.0, lightPos.z);
+		lightPos = glm::vec3(lightPos.x, lightPos.y - 1.0, lightPos.z );
+		break;
+	case 4:
+		glUniform3f(glGetUniformLocation(progID, "LightPosition"), lightPos.x + 1.0, lightPos.y, lightPos.z);
+		lightPos = glm::vec3(lightPos.x + 1.0, lightPos.y, lightPos.z );
+		break;
+	case 5:
+		glUniform3f(glGetUniformLocation(progID, "LightPosition"), lightPos.x - 1.0, lightPos.y, lightPos.z);
+		lightPos = glm::vec3(lightPos.x - 1.0, lightPos.y, lightPos.z );
+		break;
+	default:
+		break;
 	}
 }
 

@@ -18,6 +18,7 @@
     <ClCompile Include="..\src\Manager.cpp" />
     <ClCompile Include="..\src\Manipulator.cpp" />
     <ClCompile Include="..\src\Piece.cpp" />
+    <ClCompile Include="..\src\PieceObjectManager.cpp" />
     <ClCompile Include="..\src\PieceReader.cpp" />
     <ClCompile Include="..\src\ShaderManager.cpp" />
     <ClCompile Include="..\src\ShaderProgram.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="..\src\Manager.h" />
     <ClInclude Include="..\src\Manipulator.h" />
     <ClInclude Include="..\src\Piece.h" />
+    <ClInclude Include="..\src\PieceObjectManager.h" />
     <ClInclude Include="..\src\PieceReader.h" />
     <ClInclude Include="..\src\ShaderManager.h" />
     <ClInclude Include="..\src\ShaderProgram.h" />
@@ -50,6 +52,7 @@
     <None Include="..\shaders\fragment_shader.glsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="..\shaders\fragment_shader_bump.glsl" />
     <None Include="..\shaders\skybox_frag_shader.glsl" />
     <None Include="..\shaders\skybox_vertex_shader.glsl" />
     <None Include="..\shaders\SphereM_fragment_shader.glsl" />
@@ -57,6 +60,7 @@
     <None Include="..\shaders\vertex_shader.glsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="..\shaders\vertex_shader_bump.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\textures\fire.tga" />

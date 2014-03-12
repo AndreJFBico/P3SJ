@@ -5,8 +5,10 @@ void Manager::initManager()
 	Objs = new std::unordered_map<int, Drawable*>;
 	camera = new Camera();
 	manipulator = new Manipulator();
+	pObjM = new PieceObjectManager();
 	lightAttrs = Cyan;
 	globalId = 0;
+	scenetype = SPHERE;
 }
 
 void Manager::initScene()
@@ -14,13 +16,16 @@ void Manager::initScene()
 	camera->setPerspective(tFOVY, WINDOW_WIDTH / WINDOW_HEIGHT, tNEAR, tFAR);
 	camera->setCenter(glm::vec3(0.0, 0.0, -24.0f));
 	camera->updateCamera();
+	pObjM->init();
+	pObjM->loadAllObj();
 
-	addSkybox();
-	initCubeMap();
-	initSphereMapping();
-	initBumpedSphere();
-
+	addSkybox(); 
 	addGrid(-0.5, 0.0, 0.0, 1.0f);
+	
+	initCubeMap(0);
+	initSphereMapping(0);
+	initBumpedSphere(0);
+	
 	incLightAttr();
 }
 
@@ -29,42 +34,93 @@ int Manager::getNewId()
 	return globalId++;
 }
 
-void Manager::initCubeMap()
+void Manager::incScene()
+{
+	switch (scenetype)
+	{
+	case SPHERE:
+		scenetype = QUAD;
+		initSceneWithQuads();
+		break;
+	case QUAD:
+		scenetype = TORUS;
+		initSceneWithTorus();
+		break;
+	case TORUS:
+		scenetype = SPHERE;
+		initSceneWithSpheres();
+		break;
+	default:
+		break;
+	}
+}
+
+void Manager::removeObjsFromScene()
+{
+	int glID = globalId;
+	Objs->erase(glID - 1);
+	Objs->erase(glID - 2);
+	Objs->erase(glID - 3);
+	globalId -= 3;
+}
+
+void Manager::initSceneWithSpheres()
+{
+	removeObjsFromScene();
+	initCubeMap(0);
+	initSphereMapping(0);
+	initBumpedSphere(0);
+}
+
+void Manager::initSceneWithQuads()
+{
+	removeObjsFromScene();
+	initCubeMap(1);
+	initSphereMapping(1);
+	initBumpedSphere(1);
+}
+
+void Manager::initSceneWithTorus()
+{
+	removeObjsFromScene();
+	initCubeMap(2);
+	initSphereMapping(2);
+	initBumpedSphere(2);
+}
+
+void Manager::initCubeMap(int index)
 {
 	ShaderProgram* sh = createShaderProgram("..\\shaders\\CubeM_vertex_shader.glsl", "..\\shaders\\CubeM_fragment_shader.glsl", true);
 	Texture* tex = new CubemapTexture();
 	tex->load("");
-	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
-	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0, getNewId());
-	manipulator->translate(p, X_AXIS, -2);
+	Piece *p = new Piece(pObjM->getPiece(index), pObjM->getIndices(index), sh, tex, 0, getNewId());
+	manipulator->translate(p, X_AXIS, -5);
 	p->setCubemapped(true);
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 	PieceReader::getInstance().clearAll();
 }
 
-void Manager::initSphereMapping()
+void Manager::initSphereMapping(int index)
 {
 	ShaderProgram* sh = createShaderProgram("..\\shaders\\SphereM_vertex_shader.glsl", "..\\shaders\\SphereM_fragment_shader.glsl", true);
 	Texture* tex = new Texture2D();
-	tex->load("..\\textures\\SphereMap.psd");
-	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
-	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, 0, getNewId());
+	tex->load("..\\textures\\SphereMap4.psd");
+	Piece *p = new Piece(pObjM->getPiece(index), pObjM->getIndices(index), sh, tex, 0, getNewId());
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 	PieceReader::getInstance().clearAll();
 }
 
-void Manager::initBumpedSphere()
+void Manager::initBumpedSphere(int index)
 {
 	ShaderProgram* sh = createShaderProgram("..\\shaders\\vertex_shader_bump.glsl", "..\\shaders\\fragment_shader_bump.glsl", true);
 	Texture* tex = new Texture2D();
 	Texture* tex1 = new Texture2D();
 	tex->load("..\\textures\\stone2.tga");
 	tex1->load("..\\textures\\stone2_normal.tga");
-	PieceReader::getInstance().readObject("..\\objects\\sphere.obj");
-	Piece *p = new Piece(PieceReader::getInstance().getVertices(), PieceReader::getInstance().getIndices(), sh, tex, tex1, getNewId());
-	manipulator->translate(p, X_AXIS, 2);
+	Piece *p = new Piece(pObjM->getPiece(index), pObjM->getIndices(index), sh, tex, tex1, getNewId());
+	manipulator->translate(p, X_AXIS, 5);
 	std::pair<int, Piece*> val(p->getID(), p);
 	Objs->insert(val);
 	PieceReader::getInstance().clearAll();
@@ -357,6 +413,11 @@ void Manager::updateLightAttrs(int id)
 	}
 }
 
+void Manager::moveLight(int direction)
+{
+
+}
+
 void Manager::updateRotation()
 {
 	switch (rotation)
@@ -408,7 +469,7 @@ void Manager::setTexStone()
 	piece->getTexture()->load("..\\textures\\stone.tga");
 }
 
-void Manager::updateLightPos(bool direction)
+void Manager::updateLightPos(int direction)
 {
 	for (std::unordered_map<int, Drawable*>::iterator p = Objs->begin(); p != Objs->end(); p++)
 	{

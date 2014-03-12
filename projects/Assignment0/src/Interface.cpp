@@ -80,17 +80,37 @@ void Interface::KeyboardFunc(unsigned char key, int x, int y)
 	{
 		Manager::getInstance().incLightAttr();
 	}
-	else if (key == 'o')
+	else if (key == 'k')
 	{
 		Manager::getInstance().updateLightPos(0);
 	}
-	else if (key == 'l')
+	else if (key == 'i')
 	{
 		Manager::getInstance().updateLightPos(1);
+	}
+	else if (key == 'u')
+	{
+		Manager::getInstance().updateLightPos(2);
+	}
+	else if (key == 'o')
+	{
+		Manager::getInstance().updateLightPos(3);
+	}
+	else if (key == 'l')
+	{
+		Manager::getInstance().updateLightPos(4);
+	}
+	else if (key == 'j')
+	{
+		Manager::getInstance().updateLightPos(5);
 	}
 	else if (key == 'n')
 	{
 		Manager::getInstance().setPieceNoTex();
+	}
+	else if (key == 'q')
+	{
+		Manager::getInstance().incScene();
 	}
 }
 

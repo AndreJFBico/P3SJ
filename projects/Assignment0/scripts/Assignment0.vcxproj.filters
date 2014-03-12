@@ -108,6 +108,9 @@
     <ClCompile Include="..\src\ShaderManager.cpp">
       <Filter>Source Files\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\PieceObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Includes.h">
@@ -158,6 +161,9 @@
     <ClInclude Include="..\src\TextureManager.h">
       <Filter>Header Files\Shader\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\PieceObjectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shaders\fragment_shader.glsl">
@@ -185,6 +191,12 @@
       <Filter>Resource Files\shaders</Filter>
     </None>
     <None Include="..\shaders\skybox_vertex_shader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\fragment_shader_bump.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="..\shaders\vertex_shader_bump.glsl">
       <Filter>Resource Files\shaders</Filter>
     </None>
   </ItemGroup>

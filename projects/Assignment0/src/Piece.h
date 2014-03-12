@@ -68,7 +68,7 @@ public:
 		glm::vec3 MaterialSpecularColor,
 		float MaterialShininess);
 
-	void setLigthPos(bool direction);
+	void setLigthPos(int direction);
 
 	void createBufferObject();
 	void addIndex(unsigned int v);

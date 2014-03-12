@@ -10,14 +10,17 @@
 #include "PieceReader.h"
 #include "Manipulator.h"
 #include "Skybox.h"
+#include "PieceObjectManager.h"
 
 enum lightAttr { Default, Ruby, Gold, Silver, Esmerald, Cyan };
 
 enum rotType { NONE, ROTX, ROTY, ROTZ };
 
+enum sceneobjs {SPHERE, QUAD, TORUS};
+
 class Manager
 {
-	int globalId;
+	int globalId, scenetype;
 	int rotation;
 	lightAttr lightAttrs;
 	std::unordered_map<int, Drawable*> *Objs;
@@ -25,6 +28,7 @@ class Manager
 	Camera * camera;
 	Manipulator * manipulator;
 	Piece *skybox;
+	PieceObjectManager* pObjM;
 
 	Manager() {};
 	Manager(Manager const&);
@@ -38,9 +42,14 @@ public:
 
 	void initManager();
 	void initScene();
-	void initCubeMap();
-	void initSphereMapping();
-	void initBumpedSphere();
+	void incScene();
+	void initCubeMap(int index);
+	void initSphereMapping(int index);
+	void initBumpedSphere(int index);
+	void initSceneWithQuads();
+	void initSceneWithSpheres();
+	void initSceneWithTorus();
+	void removeObjsFromScene();
 	void draw();
 
 	void updateCameraRotation(float x, float y);
@@ -48,6 +57,7 @@ public:
 	void updateCameraZoom(int amount);
 	void updateLastMXY(float x, float y);
 	void updateLightAttrs(int id);
+	void moveLight(int direction);
 
 	void addGrid(float x, float y, float z, float size);
 	void addSkybox();
@@ -59,7 +69,7 @@ public:
 	void updateRotation();
 	void setTexStone();
 	void setTexFire();
-	void updateLightPos(bool direction);
+	void updateLightPos(int direction);
 	void setPieceNoTex();
 
 	int getNewId();

@@ -46,14 +46,12 @@ void main(void)
 	vec3 Lpos = vec3(ViewMatrix * vec4(LightPosition, 1.0f));//luz em eyespace
 	vec3 L = Lpos - V;
 
+	float Ldist = length(L);
 	vec3 v;
 	v.x = dot(L, tangT);
 	v.y = dot(L, tangB);
 	v.z = dot(L, tangN);
 	L = normalize(v);
-
-	float Ldist = length(L);
-	L = normalize(L);
 	vec3 E = normalize(-V);//eyespace a posição da camera é 0,0,0
 	vec3 H = normalize(L + E);
 	vec3 R = reflect(-L,N);//eyespace a posição da camera é 0,0,0
