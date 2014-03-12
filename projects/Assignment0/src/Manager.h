@@ -16,7 +16,7 @@ enum lightAttr { Default, Ruby, Gold, Silver, Esmerald, Cyan };
 
 enum rotType { NONE, ROTX, ROTY, ROTZ };
 
-enum sceneobjs {SPHERE, QUAD, TORUS};
+enum sceneobjs {SPHERE, QUAD, TORUS, LION};
 
 class Manager
 {
@@ -49,6 +49,7 @@ public:
 	void initSceneWithQuads();
 	void initSceneWithSpheres();
 	void initSceneWithTorus();
+	void initSceneWithLion();
 	void removeObjsFromScene();
 	void draw();
 

@@ -47,6 +47,10 @@ void Manager::incScene()
 		initSceneWithTorus();
 		break;
 	case TORUS:
+		scenetype = LION;
+		initSceneWithLion();
+		break;
+	case LION:
 		scenetype = SPHERE;
 		initSceneWithSpheres();
 		break;
@@ -86,6 +90,14 @@ void Manager::initSceneWithTorus()
 	initCubeMap(2);
 	initSphereMapping(2);
 	initBumpedSphere(2);
+}
+
+void Manager::initSceneWithLion()
+{
+	removeObjsFromScene();
+	initCubeMap(3);
+	initSphereMapping(3);
+	initBumpedSphere(3);
 }
 
 void Manager::initCubeMap(int index)
