@@ -322,7 +322,7 @@ void Manager::addSkybox()
 	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(-0.25, 0.0, 0.0))));
 	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -0.25, 0.0))));
 	skybox->transformCenter(glm::transpose(glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -0.25))));
-	skybox->addTransformation(glm::transpose(glm::scale(glm::mat4(1.0f), glm::vec3(1292.0, 1292.0, 1292.0))));
+	skybox->addTransformation(glm::transpose(glm::scale(glm::mat4(1.0f), glm::vec3(300.0, 300.0, 300.0))));
 	skybox->setCubemapped(true);
 	std::pair<int, Piece*> val(skybox->getID(), skybox);
 	Objs->insert(val);
